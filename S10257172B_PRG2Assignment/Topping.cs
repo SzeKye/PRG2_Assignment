@@ -1,4 +1,11 @@
-﻿using System;
+﻿//==========================================================
+// Student Number : S10257172B
+// Student Name : Loh Sze Kye
+// Partner Name : 
+//==========================================================
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

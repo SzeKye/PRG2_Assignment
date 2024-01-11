@@ -1,4 +1,11 @@
-﻿using System;
+﻿//==========================================================
+// Student Number : S10257172B
+// Student Name : Loh Sze Kye
+// Partner Name : 
+//==========================================================
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +38,9 @@ namespace S10257172B_PRG2Assignment
         }
         public Order MakeOrder()
         {
-            return currentOrder;
+            Order newOrder = new Order(Memberid, DateTime.Now);
+            newOrder.IceCreamList = new List<IceCream>();
+            return newOrder;
         }
         public bool IsBirthday()
         {

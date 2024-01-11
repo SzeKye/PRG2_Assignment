@@ -1,4 +1,10 @@
-﻿using System;
+﻿//==========================================================
+// Student Number : S10257172B
+// Student Name : Loh Sze Kye
+// Partner Name : 
+//==========================================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +20,15 @@ namespace S10257172B_PRG2Assignment
         }
         public override double CalculatePrice()
         {
-            throw new NotImplementedException();
+            double total_price = 0;
+            List<string> payFlavours = new List<string>() { "durian", "ube", "sea salt" }; // flavours that need the additional $2
+            return 0;
+                
+
+
+            
+
+            
         }
         public override string ToString()
         {

@@ -1,4 +1,11 @@
-﻿using System;
+﻿//==========================================================
+// Student Number : S10257172B
+// Student Name : Loh Sze Kye
+// Partner Name : 
+//==========================================================
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +23,10 @@ namespace S10257172B_PRG2Assignment
         }
         public override double CalculatePrice()
         {
+            if (Scoops == 1)
+            {
+
+            }
             throw new NotImplementedException();
         }
         public override string ToString()
