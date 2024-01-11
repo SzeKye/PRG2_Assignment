@@ -23,11 +23,38 @@ namespace S10257172B_PRG2Assignment
         }
         public override double CalculatePrice()
         {
+            double total_price = 0;
             if (Scoops == 1)
             {
+                total_price += 4.00;
+                foreach (Flavour f in Flavours)
+                {
+                    total_price += f.Quantity * 2;
+                }
 
             }
-            throw new NotImplementedException();
+            else if (Scoops == 2)
+            {
+                total_price += 5.50;
+                foreach (Flavour f in Flavours)
+                {
+                    total_price += f.Quantity * 2;
+                }
+            }
+            else if (Scoops == 3)
+            {
+                total_price += 6.50;
+                foreach (Flavour f in Flavours)
+                {
+                    total_price += f.Quantity * 2;
+                }
+            }
+            total_price += Toppings.Count();
+            if (dipped)
+            {
+                total_price += 2.00;
+            }
+            return total_price;
         }
         public override string ToString()
         {

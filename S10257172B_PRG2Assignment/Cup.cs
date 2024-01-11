@@ -21,13 +21,33 @@ namespace S10257172B_PRG2Assignment
         public override double CalculatePrice()
         {
             double total_price = 0;
-            List<string> payFlavours = new List<string>() { "durian", "ube", "sea salt" }; // flavours that need the additional $2
-            return 0;
-                
+            if (Scoops == 1)
+            {
+                total_price += 4.00;
+                foreach(Flavour f in Flavours)
+                {
+                    total_price += f.Quantity * 2;
+                }
 
-
-            
-
+            }
+            else if (Scoops == 2)
+            {
+                total_price += 5.50;
+                foreach (Flavour f in Flavours)
+                {
+                    total_price += f.Quantity * 2;
+                }
+            }
+            else if (Scoops == 3)
+            {
+                total_price += 6.50;
+                foreach (Flavour f in Flavours)
+                {
+                    total_price += f.Quantity * 2;
+                }
+            }
+            total_price += Toppings.Count();
+            return total_price;
             
         }
         public override string ToString()
