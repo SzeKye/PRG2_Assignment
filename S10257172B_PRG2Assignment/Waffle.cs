@@ -25,7 +25,38 @@ namespace S10257172B_PRG2Assignment
         }
         public override double CalculatePrice()
         {
-            throw new NotImplementedException();
+            double total_price = 0;
+            if (Scoops == 1)
+            {
+                total_price += 7.00;
+                foreach (Flavour f in Flavours)
+                {
+                    total_price += f.Quantity * 2;
+                }
+
+            }
+            else if (Scoops == 2)
+            {
+                total_price += 8.50;
+                foreach (Flavour f in Flavours)
+                {
+                    total_price += f.Quantity * 2;
+                }
+            }
+            else if (Scoops == 3)
+            {
+                total_price += 9.50;
+                foreach (Flavour f in Flavours)
+                {
+                    total_price += f.Quantity * 2;
+                }
+            }
+            total_price += Toppings.Count();
+            if (WaffleFlavour != "nil")  
+            {
+                total_price += 3;
+            }
+            return total_price;
         }
         public override string ToString()
         {
