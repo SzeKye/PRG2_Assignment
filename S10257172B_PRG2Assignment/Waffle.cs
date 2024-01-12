@@ -25,38 +25,35 @@ namespace S10257172B_PRG2Assignment
         }
         public override double CalculatePrice()
         {
-            double total_price = 0;
             if (Scoops == 1)
             {
-                total_price += 7.00;
-                foreach (Flavour f in Flavours)
+                if (WaffleFlavour == "red velvet" || WaffleFlavour == "charcoal" || WaffleFlavour == "pandan") 
                 {
-                    total_price += f.Quantity * 2;
+                    return 7 + Toppings.Count() * 1 + 3;
                 }
-
+                else if(WaffleFlavour == "durian" || WaffleFlavour == "ube" || WaffleFlavour == "sea salt")
+                {
+                    return 7 + Toppings.Count();
+                }
+                return 7 + Toppings.Count() * 1;
             }
             else if (Scoops == 2)
             {
-                total_price += 8.50;
-                foreach (Flavour f in Flavours)
+                if (WaffleFlavour == "red velvet" || WaffleFlavour == "charcoal" || WaffleFlavour == "pandan")
                 {
-                    total_price += f.Quantity * 2;
+                    return 8.5 + Toppings.Count() * 1 + 3;
                 }
+                return 8.5 + Toppings.Count() * 1;
             }
-            else if (Scoops == 3)
+            else if(Scoops == 3)
             {
-                total_price += 9.50;
-                foreach (Flavour f in Flavours)
+                if (WaffleFlavour == "red velvet" || WaffleFlavour == "charcoal" || WaffleFlavour == "pandan")
                 {
-                    total_price += f.Quantity * 2;
+                    return 9.5 + Toppings.Count() * 1 + 3;
                 }
+                return 9.5 + Toppings.Count() * 1;
             }
-            total_price += Toppings.Count();
-            if (WaffleFlavour != "nil")  
-            {
-                total_price += 3;
-            }
-            return total_price;
+            return 0;
         }
         public override string ToString()
         {

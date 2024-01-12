@@ -36,10 +36,11 @@ namespace S10257172B_PRG2Assignment
             Dob = dob;
             
         }
-        public Order MakeOrder() // returns a new order object associated to the customer
+        public Order MakeOrder()
         {
             Order newOrder = new Order(Memberid, DateTime.Now);
-            return newOrder; 
+            newOrder.IceCreamList = new List<IceCream>();
+            return newOrder;
         }
         public bool IsBirthday()
         {
