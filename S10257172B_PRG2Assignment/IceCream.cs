@@ -36,7 +36,9 @@ namespace S10257172B_PRG2Assignment
         
         public override string ToString()
         {
-            return base.ToString();
+            string flavoursStr = string.Join("", Flavours.Select(f => f.ToString()));
+            string toppingsStr = string.Join(", ", Toppings.Select(t => t.ToString()));
+            return $"Option: {Option} Scoops: {Scoops} \nFlavours Details:\n{flavoursStr} \nToppings: {toppingsStr}";
         }
     }
 }

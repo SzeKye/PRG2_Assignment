@@ -15,6 +15,8 @@ class Program
         Queue<Order>regQueue = new Queue<Order>();
         Queue<Order>goldQueue = new Queue<Order>();
         CreateCustomers();
+        Customer orderCust;
+        Order custOrder;
         bool yes = false;
         while(!yes)
         {
@@ -54,6 +56,9 @@ class Program
                     {
                         Console.WriteLine(rq);
                     }
+
+
+
                     break;
 
                 case 3:
@@ -68,6 +73,11 @@ class Program
                     }
                     CreateOrder();
                     break;
+
+                case 5:
+                    orderDetail();
+                    break;
+
                 default: 
                     Console.WriteLine("Invalid Option selected.");
                     break;
@@ -146,6 +156,7 @@ class Program
                 Console.WriteLine("Application successful.");
             }
         }
+        
         void CreateOrder()
         {
             bool check1 = false;
@@ -158,11 +169,13 @@ class Program
                     if(customerDict.ContainsKey(chosenId)) // to catch wrongly inputted ids which are int
                     {
                         check1 = true;
-                        Customer temp_customer = customerDict[chosenId];
-                        Order custOrder = temp_customer.MakeOrder();
+                        orderCust = customerDict[chosenId];
+                        custOrder = orderCust.MakeOrder();
+                        customerDict[chosenId].OrderHistory.Add(custOrder);
                         bool check = false;
                         while (!check)
                         {
+                           
                             List<Flavour> icf = new List<Flavour>();
                             List<Topping> ict = new List<Topping>();
                             List<string> optionList = new List<string>() { "cup", "cone", "waffle" };
@@ -305,13 +318,20 @@ class Program
                             }
                         }
                         
-                         Console.WriteLine(custOrder.CalculateTotal());
+                        Console.WriteLine(custOrder.CalculateTotal());
+                        orderCust.OrderHistory.Add(custOrder);
                         
+                         
+                         
+
+
+
                     }
                     else
                     {
                         Console.WriteLine("Customer's member ID does not exist.");
                     }
+
                     
                 }
                 catch (Exception)
@@ -325,6 +345,131 @@ class Program
             }
             
             
+            
+        }
+
+        void orderDetail()
+        {
+            
+            foreach (Customer cust in customerDict.Values)
+            {
+                Console.WriteLine("{0,-10} {1,-10} {2,-10}", cust.Name, cust.Memberid, cust.Dob.ToString("dd/MM/yyyy"));
+                cust.OrderHistory.Clear();
+            }
+            
+            int ordercustID;
+            string path = @"C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\orders.csv";
+            string[] csvLines = File.ReadAllLines(path);
+            string path2 = @"C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\customers.csv";
+            string[] csvLines2 = File.ReadAllLines(path2);
+            for (int i = 1; i < csvLines2.Length; i++)
+            {
+                string[] data = csvLines2[i].Split(",");
+                Customer c = new Customer(data[0], Convert.ToInt32(data[1]), Convert.ToDateTime(data[2]));
+
+            }
+            for (int i = 1; i < csvLines.Length; i++)
+            {
+                List<Flavour> flavoursList = new List<Flavour>();
+                List<Topping> toppingList = new List<Topping>();
+
+                string[] data = csvLines[i].Split(',');
+                Order order = new Order(Convert.ToInt16(data[0]), Convert.ToDateTime(data[2]));
+                order.TimeFulfilled = Convert.ToDateTime(data[3]);
+                ordercustID = Convert.ToInt32(data[1]);
+                string[] flavourData = new string[] { data[8], data[9], data[10] };
+                string[] toppingData = new string[] { data[11], data[12], data[13], data[14] };
+                IceCream iceCream = null;
+                bool dipped = false;
+                bool premium = false;
+                int flavourCount = 0;
+                foreach (string flavour in flavourData)
+                {
+                    
+                    
+                    if (!string.IsNullOrEmpty(flavour))
+                    {
+                        if (flavour == "Ube" || flavour == "Durian" || flavour == "Sea Salt")
+                        {
+                            premium = true;
+                            flavourCount = 1;
+
+                        }
+                        flavoursList.Add(new Flavour(flavour, premium, flavourCount));
+                    }
+                    
+                }
+                
+
+
+                foreach (string topping in toppingData)
+                {
+                    if (!string.IsNullOrEmpty(topping))
+                    {   
+                        toppingList.Add(new Topping(topping));
+                    }
+                }
+                
+                if (data[4] == "Cup")
+                {
+                    iceCream = new Cup(data[4], Convert.ToInt32(data[5]), flavoursList, toppingList);
+                }
+                else if (data[4] == "Cone")
+                {
+                    if (data[6] == "TRUE")
+                    {
+                        dipped = true;
+                    }
+                    iceCream = new Cone(data[4], Convert.ToInt32(data[5]), flavoursList, toppingList, dipped);
+                }
+                else if (data[4] == "Waffle")
+                {
+                   
+                    iceCream = new Waffle(data[4], Convert.ToInt32(data[5]), flavoursList, toppingList, data[7]);
+                }
+
+                iceCream.Flavours = new List<Flavour>(flavoursList);
+                iceCream.Toppings = new List<Topping>(toppingList);
+                order.AddIceCream(iceCream);
+                if (customerDict.ContainsKey(ordercustID))
+                {
+                    customerDict[ordercustID].OrderHistory.Add(order);
+                    
+                }
+
+            }
+            while (true)
+            {
+                try
+                {
+                    Console.Write("Select a customer by MemberID: ");
+                    int id = Convert.ToInt32(Console.ReadLine());
+                    Customer customer = customerDict[id];
+                    Console.WriteLine();
+                    //Console.WriteLine("Order History: ");
+                    foreach(Order o in customer.OrderHistory)
+                    {
+                        Console.WriteLine(o.ToString());
+                        foreach (IceCream ic in o.IceCreamList)
+                        {
+                            Console.WriteLine(ic.ToString());
+                            Console.WriteLine();
+                        }
+                    }
+                    break;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Input MemberID is in incorrect format!");
+                    break;
+                }
+                catch (Exception)
+                { 
+                    Console.WriteLine("Input MemberID not found!");
+                    break;
+                }
+
+            }
         }
 
     }

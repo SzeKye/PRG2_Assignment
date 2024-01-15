@@ -72,7 +72,17 @@ namespace S10257172B_PRG2Assignment
         }
         public override string ToString()
         {
-            return "";
+            string tr = TimeReceived.ToString("dd/MM/yyyy h:mm:ss tt");
+            string tf = null;
+            if(TimeFulfilled != null)
+            {
+                tf += TimeFulfilled.Value.ToString("dd/MM/yyyy h:mm:ss tt");
+            }
+            else
+            {
+                tf += $"Not Fulfilled";
+            }
+            return $"OrderID: {Id,-5} TimeReceived: {tr,-25} TimeFulfilled: {tf}";
         }
 
 

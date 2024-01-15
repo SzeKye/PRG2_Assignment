@@ -28,3 +28,18 @@ C:\PRG2\PRG2_Assignment\S10257172B_PRG2Assignment\obj\Debug\net6.0\refint\S10257
 C:\PRG2\PRG2_Assignment\S10257172B_PRG2Assignment\obj\Debug\net6.0\S10257172B_PRG2Assignment.pdb
 C:\PRG2\PRG2_Assignment\S10257172B_PRG2Assignment\obj\Debug\net6.0\S10257172B_PRG2Assignment.genruntimeconfig.cache
 C:\PRG2\PRG2_Assignment\S10257172B_PRG2Assignment\obj\Debug\net6.0\ref\S10257172B_PRG2Assignment.dll
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\bin\Debug\net6.0\S10257172B_PRG2Assignment.exe
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\bin\Debug\net6.0\customers.csv
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\bin\Debug\net6.0\S10257172B_PRG2Assignment.deps.json
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\bin\Debug\net6.0\S10257172B_PRG2Assignment.runtimeconfig.json
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\bin\Debug\net6.0\S10257172B_PRG2Assignment.dll
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\bin\Debug\net6.0\S10257172B_PRG2Assignment.pdb
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\obj\Debug\net6.0\S10257172B_PRG2Assignment.GeneratedMSBuildEditorConfig.editorconfig
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\obj\Debug\net6.0\S10257172B_PRG2Assignment.AssemblyInfoInputs.cache
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\obj\Debug\net6.0\S10257172B_PRG2Assignment.AssemblyInfo.cs
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\obj\Debug\net6.0\S10257172B_PRG2Assignment.csproj.CoreCompileInputs.cache
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\obj\Debug\net6.0\S10257172B_PRG2Assignment.dll
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\obj\Debug\net6.0\refint\S10257172B_PRG2Assignment.dll
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\obj\Debug\net6.0\S10257172B_PRG2Assignment.pdb
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\obj\Debug\net6.0\S10257172B_PRG2Assignment.genruntimeconfig.cache
+C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\obj\Debug\net6.0\ref\S10257172B_PRG2Assignment.dll

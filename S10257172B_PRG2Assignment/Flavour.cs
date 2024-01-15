@@ -31,7 +31,7 @@ namespace S10257172B_PRG2Assignment
         }
         public override string ToString()
         {
-            return "";
+            return $"Type: {Type,-12} Premium: {Premium,6} Quantity: {Quantity}\n";
         }
     }
 }
