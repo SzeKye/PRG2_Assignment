@@ -447,6 +447,11 @@ class Program
                     Customer customer = customerDict[id];
                     Console.WriteLine();
                     //Console.WriteLine("Order History: ");
+                    if(customer.OrderHistory.Count == 0) 
+                    {
+                        Console.WriteLine("No order history");
+                        Console.WriteLine();
+                    }
                     foreach(Order o in customer.OrderHistory)
                     {
                         Console.WriteLine(o.ToString());
