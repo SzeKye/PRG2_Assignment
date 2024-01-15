@@ -30,7 +30,7 @@ namespace S10257172B_PRG2Assignment
 
         public void AddPoints(int points)
         {
-            Points += points;
+            Points += Convert.ToInt32(Math.Floor(points*0.72));
         }
         public void RedeemPoints(int points)
         {
@@ -38,7 +38,7 @@ namespace S10257172B_PRG2Assignment
         }
         public void Punch()
         {
-
+            PunchCard = 0;
         }
         public override string ToString()
         {

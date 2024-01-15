@@ -49,24 +49,9 @@ namespace S10257172B_PRG2Assignment
             double total_cost = 0;
             foreach(IceCream cream in IceCreamList)
             {
-                if(cream is Cup)
-                {
-                    Cup cup = (Cup)cream;
-                    double c_price = cup.CalculatePrice();
+                
+                    double c_price = cream.CalculatePrice();
                     total_cost += c_price;
-                }
-                else if (cream is Cone)
-                {
-                    Cone cone = (Cone)cream;
-                    double co_price = cone.CalculatePrice();
-                    total_cost += co_price;
-                }
-                else if (cream is Waffle)
-                {
-                    Waffle waffle = (Waffle)cream;
-                    double waf_price = waffle.CalculatePrice();
-                    total_cost += waf_price;
-                }
             }
             return total_cost;
         }

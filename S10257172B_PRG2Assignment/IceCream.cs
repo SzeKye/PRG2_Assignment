@@ -34,6 +34,7 @@ namespace S10257172B_PRG2Assignment
         }
         public abstract double CalculatePrice();
         
+        
         public override string ToString()
         {
             return base.ToString();
