@@ -38,25 +38,31 @@ class Program
                     break;
 
                 case 2:
-                    if (goldQueue.Count == 0)
+                    if (goldQueue.Count > 0)
+                    {
+                        Console.WriteLine("Gold member's queue: ");
+                        foreach (Order gq in goldQueue)
+                        {
+                            Console.WriteLine(gq);
+                        }                     
+                    }
+                    else
                     {
                         Console.WriteLine("Gold queue is empty.");
                     }
-                    if (regQueue.Count == 0)
+                    if (regQueue.Count > 0)
+                    {
+                        Console.WriteLine("Regular member's queue: ");
+                        foreach (Order rq in regQueue)
+                        {
+                            Console.WriteLine(rq);
+                        }
+                        
+                    }
+                    else
                     {
                         Console.WriteLine("Regular queue is empty.");
                     }
-                    Console.WriteLine("Gold member's queue: ");
-                    foreach (Order gq in goldQueue)
-                    {
-                        Console.WriteLine(gq);
-                    }
-                    Console.WriteLine("Regular member's queue: ");
-                    foreach(Order rq in regQueue)
-                    {
-                        Console.WriteLine(rq);
-                    }
-
 
 
                     break;
@@ -404,9 +410,9 @@ class Program
             }
             
             int ordercustID;
-            string path = @"C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\orders.csv";
+            string path = "orders.csv";
             string[] csvLines = File.ReadAllLines(path);
-            string path2 = @"C:\NP\Year 1 Semester 2\Programming2\New folder (2)\S10257172B_PRG2Assignment\customers.csv";
+            string path2 = "customers.csv";
             string[] csvLines2 = File.ReadAllLines(path2);
             for (int i = 1; i < csvLines2.Length; i++)
             {
