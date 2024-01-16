@@ -25,36 +25,45 @@ namespace S10257172B_PRG2Assignment
         }
         public override double CalculatePrice()
         {
+            List<Array> price = new List<Array>();
             double total_price = 0;
-            if (Scoops == 1)
+            using (StreamReader sr = new StreamReader("options.csv"))
             {
-                total_price += 7.00;
-                foreach (Flavour f in Flavours)
+                bool z = false;
+                string? s;
+                while ((s = sr.ReadLine()) != null)
                 {
-                    total_price += f.Quantity * 2;
+                    if (!z)
+                    {
+                        z = true;
+                        continue;
+                    }
+                    string[] str = s.Split(",");
+                    if (str[0] == "Waffle")
+                    {
+                        if (Scoops == (Convert.ToInt32(str[1])))
+                        {
+                            if (WaffleFlavour == str[3].ToLower())
+                            {
+                                total_price += Convert.ToDouble(str[4]);
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
 
             }
-            else if (Scoops == 2)
-            {
-                total_price += 8.50;
-                foreach (Flavour f in Flavours)
-                {
-                    total_price += f.Quantity * 2;
-                }
-            }
-            else if (Scoops == 3)
-            {
-                total_price += 9.50;
-                foreach (Flavour f in Flavours)
-                {
-                    total_price += f.Quantity * 2;
-                }
-            }
             total_price += Toppings.Count();
-            if (WaffleFlavour != "nil")  
+            foreach (Flavour f in Flavours)
             {
-                total_price += 3;
+                if (f.Premium == true)
+                {
+                    total_price += f.Quantity;
+                }
             }
             return total_price;
         }

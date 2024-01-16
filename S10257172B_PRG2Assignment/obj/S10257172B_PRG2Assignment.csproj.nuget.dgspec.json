@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\NP\\Year 1 Semester 2\\Programming2\\New folder (2)\\S10257172B_PRG2Assignment\\S10257172B_PRG2Assignment.csproj": {}
+    "C:\\PRG2\\PRG2_Assignment\\S10257172B_PRG2Assignment\\S10257172B_PRG2Assignment.csproj": {}
   },
   "projects": {
-    "C:\\NP\\Year 1 Semester 2\\Programming2\\New folder (2)\\S10257172B_PRG2Assignment\\S10257172B_PRG2Assignment.csproj": {
+    "C:\\PRG2\\PRG2_Assignment\\S10257172B_PRG2Assignment\\S10257172B_PRG2Assignment.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NP\\Year 1 Semester 2\\Programming2\\New folder (2)\\S10257172B_PRG2Assignment\\S10257172B_PRG2Assignment.csproj",
+        "projectUniqueName": "C:\\PRG2\\PRG2_Assignment\\S10257172B_PRG2Assignment\\S10257172B_PRG2Assignment.csproj",
         "projectName": "S10257172B_PRG2Assignment",
-        "projectPath": "C:\\NP\\Year 1 Semester 2\\Programming2\\New folder (2)\\S10257172B_PRG2Assignment\\S10257172B_PRG2Assignment.csproj",
-        "packagesPath": "C:\\Users\\liewy_nav3viy\\.nuget\\packages\\",
-        "outputPath": "C:\\NP\\Year 1 Semester 2\\Programming2\\New folder (2)\\S10257172B_PRG2Assignment\\obj\\",
+        "projectPath": "C:\\PRG2\\PRG2_Assignment\\S10257172B_PRG2Assignment\\S10257172B_PRG2Assignment.csproj",
+        "packagesPath": "C:\\Users\\lohsz\\.nuget\\packages\\",
+        "outputPath": "C:\\PRG2\\PRG2_Assignment\\S10257172B_PRG2Assignment\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\liewy_nav3viy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lohsz\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

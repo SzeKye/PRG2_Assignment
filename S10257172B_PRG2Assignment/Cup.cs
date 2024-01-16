@@ -21,34 +21,48 @@ namespace S10257172B_PRG2Assignment
         public override double CalculatePrice()
         {
             double total_price = 0;
-            if (Scoops == 1)
+            Dictionary<int, double> price = new Dictionary<int, double>();
+            using (StreamReader sr = new StreamReader("options.csv"))
             {
-                total_price += 4.00;
-                foreach(Flavour f in Flavours)
+                bool z = false;
+                string? s;
+                while ((s = sr.ReadLine()) != null)
                 {
-                    total_price += f.Quantity * 2;
+                    if (!z)
+                    {
+                        z = true;
+                        continue;
+                    }
+                    string[] str = s.Split(",");
+                    if (str[0] == "Cup")
+                    {
+                        price.Add(Convert.ToInt32(str[1]), Convert.ToDouble(str[4]));
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
 
             }
-            else if (Scoops == 2)
+            foreach (int scCount in price.Keys)
             {
-                total_price += 5.50;
-                foreach (Flavour f in Flavours)
+                if (Scoops.Equals(scCount))
                 {
-                    total_price += f.Quantity * 2;
-                }
-            }
-            else if (Scoops == 3)
-            {
-                total_price += 6.50;
-                foreach (Flavour f in Flavours)
-                {
-                    total_price += f.Quantity * 2;
+                    total_price += price[scCount];
+                    foreach (Flavour f in Flavours)
+                    {
+                        if (f.Premium == true)
+                        {
+                            total_price += f.Quantity;
+                        }
+                    }
+
+
                 }
             }
             total_price += Toppings.Count();
             return total_price;
-            
         }
         public override string ToString()
         {
