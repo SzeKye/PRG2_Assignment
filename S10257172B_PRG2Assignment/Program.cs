@@ -322,6 +322,7 @@ class Program
                                         if (s == "original")
                                         {
                                             Console.WriteLine("{0,-10} {1,-10}", s, "$0.00");
+                                            break;
                                         }
                                         Console.WriteLine("{0,-10} {1,-10}", s, "$3.00");
                                     }
@@ -363,7 +364,7 @@ class Program
                             }
                             else
                             {
-                                Console.WriteLine("Invalid ice cream option selected.");
+                                Console.WriteLine("Invalid ice cream option/type of scoop entered. Please check your spelling");
                             }
                         }
 
