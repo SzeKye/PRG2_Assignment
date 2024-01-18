@@ -1036,6 +1036,10 @@ class Program
                                     }
                                   
                                 }
+                                if(customer.CurrentOrder == null)
+                                {
+                                    customer.CurrentOrder = new Order(customer.Memberid,DateTime.Now);
+                                }
                                 if(icOption.ToLower() == "cup")
                                 {
                                     customer.CurrentOrder.AddIceCream(new Cup(icOption, scoops, flavourList, toppingList));
@@ -1056,7 +1060,7 @@ class Program
                                 if(icOption.ToLower() == "waffle")
                                 {
                                     List<string> waffleFlavour = new List<string>() {"red velvet","charcoal","pandan","original"};
-                                    Console.Write("What waffle flavour do you want? (Red velvet, charcoal, pandan, original)");
+                                    Console.Write("What waffle flavour do you want? (Red velvet, charcoal, pandan, original) ");
                                     string wf = Console.ReadLine();
                                     if (waffleFlavour.Contains(wf.ToLower()))
                                     {
