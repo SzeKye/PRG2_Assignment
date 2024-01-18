@@ -84,6 +84,10 @@ class Program
                     orderDetail();
                     break;
 
+                case 6:
+                    ModifyOrder();
+                    break;
+
                 default: 
                     Console.WriteLine("Invalid Option selected.");
                     break;
@@ -140,7 +144,7 @@ class Program
                         x = true;
                         continue;
                     }
-                    Customer c1 = new(str[0], Convert.ToInt32(str[1]), Convert.ToDateTime(str[2]));
+                    Customer c1 = new Customer(str[0], Convert.ToInt32(str[1]), DateTime.ParseExact(str[2], "dd/MM/yyyy", null));
                     c1.Rewards = new(Convert.ToInt32(str[4]), Convert.ToInt32(str[5]));
                     c1.Rewards.Tier = str[3];
                     customerDict.Add(Convert.ToInt32(str[1]), c1);
@@ -418,7 +422,7 @@ class Program
             for (int i = 1; i < csvLines2.Length; i++)
             {
                 string[] data = csvLines2[i].Split(",");
-                Customer c = new Customer(data[0], Convert.ToInt32(data[1]), Convert.ToDateTime(data[2]));
+                Customer c = new Customer(data[0], Convert.ToInt32(data[1]), DateTime.ParseExact(data[2], "dd/MM/yyyy", null));
 
             }
             for (int i = 1; i < csvLines.Length; i++)
@@ -427,8 +431,8 @@ class Program
                 List<Topping> toppingList = new List<Topping>();
 
                 string[] data = csvLines[i].Split(',');
-                Order order = new Order(Convert.ToInt16(data[0]), Convert.ToDateTime(data[2]));
-                order.TimeFulfilled = Convert.ToDateTime(data[3]);
+                Order order = new Order(Convert.ToInt16(data[0]), DateTime.ParseExact(data[2], "dd/MM/yyyy HH:mm", null));
+                order.TimeFulfilled = DateTime.ParseExact(data[3], "dd/MM/yyyy HH:mm", null);
                 ordercustID = Convert.ToInt32(data[1]);
                 string[] flavourData = new string[] { data[8], data[9], data[10] };
                 string[] toppingData = new string[] { data[11], data[12], data[13], data[14] };
@@ -445,9 +449,9 @@ class Program
                         if (flavour == "Ube" || flavour == "Durian" || flavour == "Sea Salt")
                         {
                             premium = true;
-                            flavourCount = 1;
 
                         }
+                        flavourCount = 1;
                         flavoursList.Add(new Flavour(flavour, premium, flavourCount));
                     }
                     
@@ -500,20 +504,41 @@ class Program
                     Customer customer = customerDict[id];
                     Console.WriteLine();
                     //Console.WriteLine("Order History: ");
-                    if(customer.OrderHistory.Count == 0) 
+                    if(customer.OrderHistory.Count != 0) 
+                    {
+                        foreach (Order o in customer.OrderHistory)
+                        {
+                            Console.WriteLine(o.ToString());
+                            foreach (IceCream ic in o.IceCreamList)
+                            {
+                                Console.WriteLine(ic.ToString());
+                                Console.WriteLine();
+                            }
+                        }
+                        Console.WriteLine("No order history");
+                        Console.WriteLine();
+                    }
+                    else
                     {
                         Console.WriteLine("No order history");
                         Console.WriteLine();
                     }
-                    foreach(Order o in customer.OrderHistory)
+
+                    if(customer.CurrentOrder != null)
                     {
-                        Console.WriteLine(o.ToString());
-                        foreach (IceCream ic in o.IceCreamList)
+                        Console.WriteLine(customer.CurrentOrder.ToString());
+                        foreach (IceCream ic in customer.CurrentOrder.IceCreamList)
                         {
                             Console.WriteLine(ic.ToString());
                             Console.WriteLine();
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine("No current order");
+                        Console.WriteLine();
+                    }
+                    
                     break;
                 }
                 catch (FormatException)
@@ -528,6 +553,309 @@ class Program
                 }
 
             }
+        }
+
+        void ModifyOrder()
+        {
+            foreach (Customer cust in customerDict.Values)
+            {
+                Console.WriteLine("{0,-10} {1,-10} {2,-10}", cust.Name, cust.Memberid, cust.Dob.ToString("dd/MM/yyyy"));
+                cust.OrderHistory.Clear();
+            }
+            while (true)
+            {
+                try
+                {
+                    Console.Write("Select a customer by MemberID: ");
+                    int id = Convert.ToInt32(Console.ReadLine());
+                    Customer customer = customerDict[id];
+                    if (customer.CurrentOrder != null)
+                    {
+                        Console.WriteLine(customer.CurrentOrder.ToString());
+                        foreach (IceCream ic in customer.CurrentOrder.IceCreamList)
+                        {
+                            Console.WriteLine(ic.ToString());
+                            Console.WriteLine();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No current order");
+                        Console.WriteLine();
+                    }
+                    Console.WriteLine("[1] Modify existing ice cream");
+                    Console.WriteLine("[2] Add a new ice cream");
+                    Console.WriteLine("[3] Delete an ice cream");
+                    Console.Write("Choose an option: ");
+                    int option = Convert.ToInt32(Console.ReadLine());
+                    if(option == 1)
+                    {
+                        Console.WriteLine("Select which ice cream you want to modify by the order(1,2,3,..): ");
+                        int icOption = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine(customer.CurrentOrder.IceCreamList[option-1].ToString());
+                        IceCream currentIceCream = customer.CurrentOrder.IceCreamList[option - 1];
+                        while (true)
+                        {
+                            Console.WriteLine("What modification you wish to make?");
+                            Console.WriteLine("[1] Modify Ice Cream Option");
+                            Console.WriteLine("[2] Modify Scoops");
+                            Console.WriteLine("[3] Modify Flavours");
+                            Console.WriteLine("[4] Modify Toppings");
+                            
+                            if(currentIceCream.Option == "Cone")
+                            {
+                                Console.WriteLine("[5] Modify Dipped Cone");
+                            }
+                            if(currentIceCream.Option == "Waffle")
+                            {
+                                Console.WriteLine("[6] Modify Waffle Flavour");
+                            }
+                            Console.WriteLine("[0] Exit");
+                            Console.Write("Choose an option: ");
+                            int modifyOption = Convert.ToInt32(Console.ReadLine());
+                            if(modifyOption == 1)
+                            {
+                                try
+                                {
+                                    Console.Write("Which option do you want to pick?(Waffle,Cone,Cup): ");
+                                    string modify = Console.ReadLine();
+                                   
+                                    switch (modify.ToLower())
+                                    {
+                                        case "waffle":
+                                            Console.WriteLine("Which waffle flavour do you want? (Red velvet, charcoal, pandan, original): ");
+                                            string wf = Console.ReadLine();
+                                            if(wf.ToLower() == "original")
+                                            {
+                                                wf = null;
+                                            }
+                                            else
+                                            {
+                                                wf.ToUpper();
+                                            }
+                                            customer.CurrentOrder.IceCreamList[option - 1] = new Waffle("Waffle", currentIceCream.Scoops, currentIceCream.Flavours, currentIceCream.Toppings, wf);
+                                            break;
+                                        case "cone":
+                                            Console.Write("Do you want it to be chocolate dipped? (Y/N): ");
+                                            char dipped = Convert.ToChar(Console.ReadLine());
+                                            bool dippedBool = false;
+                                            if(dipped == 'Y')
+                                            {
+                                                dippedBool = true;
+                                            }
+                                            customer.CurrentOrder.IceCreamList[option - 1] = new Cone("Cone", currentIceCream.Scoops, currentIceCream.Flavours, currentIceCream.Toppings, dippedBool);
+                                            break;
+                                        case "cup":
+                                            customer.CurrentOrder.IceCreamList[option - 1] = new Cup("Cup", currentIceCream.Scoops, currentIceCream.Flavours, currentIceCream.Toppings);
+                                            break;
+                                        default:
+                                            Console.WriteLine("Invalid option, please try again");
+                                            break;
+                                    }
+                                }
+                                catch(Exception)
+                                {
+                                    Console.WriteLine("Wrong input, please check your spelling!");
+                                }
+                            }
+                            else if(modifyOption == 2)
+                            {
+                                while(true)
+                                {
+                                    Console.WriteLine("How many scoops you want? (single,double,triple): ");
+                                    string scoops = Console.ReadLine();
+                                    int a = 0;
+                                    bool premium = false;
+                                    customer.CurrentOrder.IceCreamList[option - 1].Flavours.Clear();
+                                    if (scoops == "single")
+                                    {
+                                        a = 1;
+                                        customer.CurrentOrder.IceCreamList[option - 1].Scoops = 1;
+                                        for(int i = 0; i < a; i++)
+                                        {
+                                            Console.WriteLine("Enter flavour of scoops: ");
+                                            string flavour = Console.ReadLine();
+                                            customer.CurrentOrder.IceCreamList[option - 1].Flavours.Add(new Flavour(flavour,premium,1));
+                                        }
+                                        
+                                        break;
+                                    }
+                                    else if (scoops == "double")
+                                    {
+                                        a = 2;
+                                        for(int i = 0; i < a; i++)
+                                        {
+                                            Console.WriteLine("Enter flavour of scoops: ");
+                                            string flavour = Console.ReadLine();
+                                            customer.CurrentOrder.IceCreamList[option - 1].Flavours.Add(new Flavour(flavour, premium, 1));
+                                        }
+                                        break;
+                                    }
+                                    else if (scoops == "triple")
+                                    {
+                                        a = 3;
+                                        for (int i = 0; i < a; i++)
+                                        {
+                                            Console.WriteLine("Enter flavour of scoops: ");
+                                            string flavour = Console.ReadLine();
+                                            customer.CurrentOrder.IceCreamList[option - 1].Flavours.Add(new Flavour(flavour, premium, 1));
+                                        }
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Please enter a valid scoops!");
+                                    }
+                                }
+                                
+                            }
+                            else if(modifyOption == 3)
+                            {
+                                foreach(Flavour flavour in currentIceCream.Flavours)
+                                {
+                                    Console.WriteLine(flavour.ToString());
+                                }
+                                while (true)
+                                {
+                                    try
+                                    {
+                                        bool premium = false;
+                                        Console.Write("Which flavour do you want to modify? (1,2,3,.., 0 to exit)");
+                                        int flavourOption = Convert.ToInt32(Console.ReadLine());
+                                        if(flavourOption == 0)
+                                        {
+                                            break;
+                                        }
+                                        Console.Write("Which flavour do you want? (Vanilla, Chocolate, Strawberry, Durian, Ube, Sea salt)");
+                                        string flavours = Console.ReadLine();
+                                        if (flavours == "Ube" || flavours == "Durian" || flavours == "Sea Salt")
+                                        {
+                                            premium = true;
+                                        }
+                                        currentIceCream.Flavours[flavourOption - 1] = new Flavour(flavours, premium, 1);
+                                        
+                                    }
+                                    catch (FormatException)
+                                    {
+                                        Console.WriteLine("Please input a valid option!");
+                                    }
+                                    catch (Exception)
+                                    {
+                                        Console.WriteLine("Invalid input, please check your spelling!");
+                                    }
+                                }
+                                
+                            }
+                            else if(modifyOption == 4)
+                            {
+                                foreach(Topping topping in currentIceCream.Toppings)
+                                {
+                                    Console.WriteLine(topping.ToString());
+                                }
+                                while (true)
+                                {
+                                    try
+                                    {
+                                        Console.Write("Which topping do you want to modify? (1,2,3,.., 0 to exit)");
+                                        int toppingOption = Convert.ToInt32(Console.ReadLine());
+                                        if (toppingOption == 0)
+                                        {
+                                            break;
+                                        }
+                                        Console.Write("Which topping do you want? (Sprinkles, Mochi, Sago, Oreos) (D to delete the toppings) ");
+                                        string topping = Console.ReadLine();
+                                        if (topping == "D")
+                                        {
+                                            currentIceCream.Toppings.RemoveAt(toppingOption - 1);
+                                        }
+                                        else if (topping.ToLower() == "sprinkles" || topping.ToLower() == "mochi" || topping.ToLower() == "sago" || topping.ToLower() == "oreos")
+                                        {
+                                            currentIceCream.Toppings[toppingOption - 1].Type = topping;
+                                        }
+
+                                    }
+                                    catch (FormatException)
+                                    {
+                                        Console.WriteLine("Please input a valid option!");
+                                    }
+                                    catch (IndexOutOfRangeException)
+                                    {
+                                        Console.WriteLine("Please input a option in range!");
+                                    }
+                                    catch (Exception)
+                                    {
+                                        Console.WriteLine("Invalid input, please check your spelling!");
+                                    }
+                                }
+                            }
+                            else if(modifyOption == 5)
+                            {
+                                while(true)
+                                {
+                                    try
+                                    {
+                                        Console.WriteLine("Do you want it to be dipped? (Y/N)");
+                                        string dipped = Console.ReadLine();
+                                        bool dippedBool = false;
+                                        if (dipped == "Y")
+                                        {
+                                            dippedBool = true;
+
+                                        }
+
+                                        currentIceCream = new Cone(currentIceCream.Option, currentIceCream.Scoops, currentIceCream.Flavours, currentIceCream.Toppings, dippedBool);
+                                        break;
+                                    }
+                                    catch(Exception)
+                                    {
+                                        Console.WriteLine("Invalid input, please check your spelling!");
+                                    }
+                                }
+                                
+                            }
+                            else if(modifyOption == 6)
+                            {
+                                while (true)
+                                {
+                                    try
+                                    {
+                                        Console.WriteLine("What waffle flavour do you want? (Red velvet, charcoal, pandan) (D to delete waffle flavour)");
+                                        string wf = Console.ReadLine();
+                                        if(wf == "D")
+                                        {
+                                            currentIceCream = new Waffle(currentIceCream.Option, currentIceCream.Scoops, currentIceCream.Flavours, currentIceCream.Toppings, null);
+                                        }
+                                        currentIceCream = new Waffle(currentIceCream.Option, currentIceCream.Scoops, currentIceCream.Flavours, currentIceCream.Toppings, wf);
+                                        
+                                    }
+                                    catch (Exception)
+                                    {
+                                        Console.WriteLine("Invalid input, please check your spelling!");
+                                    }
+                                }
+                            }
+                            else if(modifyOption == 0)
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+
+                    
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Input MemberID is in incorrect format!");
+                    break;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Input MemberID not found!");
+                    break;
+                }
+            }
+           
         }
 
     }
