@@ -54,7 +54,7 @@ namespace S10257172B_PRG2Assignment
                     {
                         if (f.Premium == true)
                         {
-                            total_price += f.Quantity;
+                            total_price += (f.Quantity * 2);
                         }
                     }
 

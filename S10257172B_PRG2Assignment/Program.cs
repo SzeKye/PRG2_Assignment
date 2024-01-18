@@ -1,7 +1,7 @@
 ﻿//==========================================================
 // Student Number : S10257172B
-// Student Name : Loh Sze Kye
-// Partner Name : 
+// Student Name : Loh Sze Kye (option 1,3,4)
+// Partner Name : Liew Yong Hong (option 2,5,6)
 //==========================================================
 
 using System;
@@ -146,14 +146,15 @@ class Program
                         continue;
                     }
                     Customer c1 = new Customer(str[0], Convert.ToInt32(str[1]), DateTime.ParseExact(str[2], "dd/MM/yyyy", null));
-                    c1.Rewards = new(Convert.ToInt32(str[4]), Convert.ToInt32(str[5]));
-                    c1.Rewards.Tier = str[3];
+                    c1.Rewards = new PointCard(Convert.ToInt32(str[4]), Convert.ToInt32(str[5])); //assigns current points to each customer object
+                    c1.Rewards.Tier = str[3]; //assigns membership tier to each customer object
                     customerDict.Add(Convert.ToInt32(str[1]), c1);
                 }
             }
         }
         void RegisterCustomer() //Option 3
         {
+            
             Console.Write("Enter name: "); // try catch blocks needed here
             string? c_name = Console.ReadLine();
             Console.Write("Enter id number: "); // try catch blocks needed here
@@ -174,6 +175,7 @@ class Program
         void CreateOrder()
         {
             Dictionary<string, int> flavDict = new Dictionary<string, int>();
+            List<string> premiumFlavList = new List<string>();
             bool check1 = false;
             using (StreamReader sr = new StreamReader("flavours.csv"))
             {
@@ -190,6 +192,10 @@ class Program
                         continue;
                     }
                     flavDict.Add(str[0].ToLower(), Convert.ToInt32(str[1]));
+                    if (Convert.ToInt32(str[1]) == 2)
+                    {
+                        premiumFlavList.Add(str[0].ToLower());
+                    }
                 }
             }
             
@@ -222,11 +228,12 @@ class Program
                             string? scoopType = Console.ReadLine();
                             scoopType = scoopType.ToLower().Trim();
 
+                            Dictionary<string,int> sameScoop = new Dictionary<string,int>();
                             List<string> optionList = new List<string>() { "cup", "cone", "waffle" };
                             List<string> scoopCheck = new List<string>() { "single", "double", "triple" };
                             if (optionList.Contains(orderOption) && scoopCheck.Contains(scoopType))
                             {
-                                numScoop += scoopCheck.FindIndex(x => x.Contains(scoopType)) + 1;
+                                numScoop += scoopCheck.FindIndex(x => x.Contains(scoopType)) + 1; //index starts from 0 hence the +1
                                 Console.WriteLine("{0,-10} {1,-10}", "Flavours", "Cost");
                                 foreach (KeyValuePair<string, int> f in flavDict)
                                 {
@@ -235,24 +242,41 @@ class Program
 
                                 for (int a = 0; a < numScoop; a++) // if single loops once, double loops twice, triple loops thrice.
                                 {
-                                    Console.Write($"Enter flavour of scoop: ");
+                                    Console.Write("Enter flavour of scoop: ");
                                     string? flavScoop = Console.ReadLine();
                                     flavScoop = flavScoop.ToLower().Trim();
 
-                                    if (flavDict.ContainsKey(flavScoop))
+                                    if (flavDict.ContainsKey(flavScoop)) //checks if its a valid flavour
                                     {
-                                        int flavCost = flavDict[flavScoop];
-                                        icf.Add(new Flavour(scoopType, true, flavCost));
+                                        if (sameScoop.ContainsKey(flavScoop)) //checks if the flavour has been ordered twice or thrice
+                                        {
+                                            sameScoop[flavScoop] += 1;
+                                        }
+                                        else
+                                        {
+                                            sameScoop.Add(flavScoop, 1);
+                                        }  
                                     }
 
                                     else // if invalid flavour is entered it adds one to numScoop, so that the wasted loop loops again
                                     {
                                         Console.WriteLine("Enter a valid scoop flavour");
                                         numScoop += 1;
-                                        extraRound -= 1; //resets it back to the original scoop count by counting no. of extra rounds taken
+                                        extraRound -= 1; 
                                     }
                                 }
-                                numScoop = numScoop + extraRound;
+                                foreach(KeyValuePair<string,int> ss in sameScoop)
+                                {
+                                    if (premiumFlavList.Contains(ss.Key)) 
+                                    {
+                                        icf.Add(new Flavour(ss.Key, true, ss.Value)); 
+                                        continue;
+                                    }
+                                    icf.Add(new Flavour(ss.Key, false, ss.Value));
+                                }  
+                                
+
+                                numScoop = numScoop + extraRound; //resets it back to the original scoop count by counting no. of extra rounds taken
                                 Console.WriteLine("********Toppings Available********"); //toppings menu
                                 List<string> toppings = new List<string>();
                                 using (StreamReader sr = new StreamReader("toppings.csv"))
