@@ -95,6 +95,10 @@ class Program
                 case 6:
                     ModifyOrder();
                     break;
+                
+                case 8:
+                    totalCharged();
+                    break;
 
                 default: 
                     Console.WriteLine("Invalid Option selected.");
@@ -108,7 +112,7 @@ class Program
             List<string> options = new List<string>()
             {
                 "List all customers","List all current orders","Register a new customer",
-                "Create an order","Display customer's order details","Modify order details","Exit"
+                "Create an order","Display customer's order details","Modify order details","Process order", "Display monthly charged amounts", "Exit"
             };
             for (int i = 0; i < options.Count; i++) //enumerates through the list of options
             {
@@ -1276,6 +1280,38 @@ class Program
 
             }
            
+        }
+
+        void totalCharged()
+        {
+            Console.Write("Enter the year: ");
+            int year = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine();
+            int monthCount = 1;
+            double total = 0;
+            Dictionary<string, double> monthDictionary = new Dictionary<string, double> { { "Jan", 0 }, { "Feb", 0 }, { "Mar", 0 }, { "Apr", 0 }, { "May", 0 }, { "Jun", 0 }, { "Jul", 0 }, { "Aug", 0 }, { "Sep", 0 }, { "Oct", 0 }, { "Nov", 0 }, { "Dec", 0 } };
+
+            foreach (Customer cust in customerDict.Values)
+            {
+                foreach(Order co in cust.OrderHistory)
+                {
+                    if (co.TimeFulfilled.HasValue && co.TimeFulfilled.Value.Year == year)
+                    {
+                        string month = co.TimeFulfilled.Value.ToString("MMM");
+                        foreach (IceCream ic in co.IceCreamList)
+                        {
+                            monthDictionary[month] += ic.CalculatePrice();
+                        }
+                    }
+                }
+            }
+            
+            foreach(var kvp in monthDictionary)
+            {
+                Console.WriteLine($"{kvp.Key} {year}:   ${kvp.Value}");
+                total += kvp.Value;
+            }
+            Console.WriteLine($"\nTotal:      ${total}");
         }
 
     }
