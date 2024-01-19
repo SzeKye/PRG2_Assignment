@@ -38,7 +38,7 @@ namespace S10257172B_PRG2Assignment
         {
             string flavoursStr = string.Join("", Flavours.Select(f => f.ToString()));
             string toppingsStr = string.Join(", ", Toppings.Select(t => t.ToString()));
-            return $"Option: {Option.ToUpper()} Scoops: {Scoops} \nFlavours Details:\n{flavoursStr} \nToppings: {toppingsStr}";
+            return $"Option: {Option.ToUpper()} Scoops: {Scoops} \nFlavours Details:\n{flavoursStr} \nToppings: {toppingsStr}\n";
         }
     }
 }
