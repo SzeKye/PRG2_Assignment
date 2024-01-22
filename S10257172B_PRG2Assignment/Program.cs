@@ -1296,34 +1296,63 @@ class Program
 
         void totalCharged()
         {
-            Console.Write("Enter the year: ");
-            int year = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine();
-            int monthCount = 1;
-            double total = 0;
-            Dictionary<string, double> monthDictionary = new Dictionary<string, double> { { "Jan", 0 }, { "Feb", 0 }, { "Mar", 0 }, { "Apr", 0 }, { "May", 0 }, { "Jun", 0 }, { "Jul", 0 }, { "Aug", 0 }, { "Sep", 0 }, { "Oct", 0 }, { "Nov", 0 }, { "Dec", 0 } };
-
-            foreach (Customer cust in customerDict.Values)
+            while (true)
             {
-                foreach(Order co in cust.OrderHistory)
+                try
                 {
-                    if (co.TimeFulfilled.HasValue && co.TimeFulfilled.Value.Year == year)
+                    Console.Write("Enter the year: ");
+                    int year = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine();
+                    int monthCount = 1;
+                    double total = 0;
+                    Dictionary<string, double> monthDictionary = new Dictionary<string, double> { { "Jan", 0 }, { "Feb", 0 }, { "Mar", 0 }, { "Apr", 0 }, { "May", 0 }, { "Jun", 0 }, { "Jul", 0 }, { "Aug", 0 }, { "Sep", 0 }, { "Oct", 0 }, { "Nov", 0 }, { "Dec", 0 } };
+
+                    foreach (Customer cust in customerDict.Values)
                     {
-                        string month = co.TimeFulfilled.Value.ToString("MMM");
-                        foreach (IceCream ic in co.IceCreamList)
+                        foreach (Order co in cust.OrderHistory)
                         {
-                            monthDictionary[month] += ic.CalculatePrice();
+                            if (co.TimeFulfilled.HasValue && co.TimeFulfilled.Value.Year == year)
+                            {
+                                string month = co.TimeFulfilled.Value.ToString("MMM");
+                                foreach (IceCream ic in co.IceCreamList)
+                                {
+                                    monthDictionary[month] += ic.CalculatePrice();
+                                }
+                            }
                         }
+                        if(cust.CurrentOrder != null)
+                        {
+                            foreach (IceCream ic in cust.CurrentOrder.IceCreamList)
+                            {
+                                if (cust.CurrentOrder.TimeFulfilled.HasValue && cust.CurrentOrder.TimeFulfilled.Value.Year == year)
+                                {
+                                    string month = cust.CurrentOrder.TimeFulfilled.Value.ToString("MMM");
+                                    monthDictionary[month] += ic.CalculatePrice();
+                                }
+                            }
+                        }
+                        
                     }
+
+                    foreach (var kvp in monthDictionary)
+                    {
+                        Console.WriteLine($"{kvp.Key} {year}:   ${kvp.Value}");
+                        total += kvp.Value;
+                    }
+                    Console.WriteLine($"\nTotal:      ${total}");
+                    break;
                 }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid format, please try again!");
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Please enter a valid year");
+                }
+                
             }
             
-            foreach(var kvp in monthDictionary)
-            {
-                Console.WriteLine($"{kvp.Key} {year}:   ${kvp.Value}");
-                total += kvp.Value;
-            }
-            Console.WriteLine($"\nTotal:      ${total}");
         }
 
 
