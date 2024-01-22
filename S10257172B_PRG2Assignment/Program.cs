@@ -1,26 +1,28 @@
 ﻿//==========================================================
 // Student Number : S10257172B
-// Student Name : Loh Sze Kye (option 1,3,4)
-// Partner Name : Liew Yong Hong (option 2,5,6)
+// Student Name : Loh Sze Kye (option 1,3,4, and advanced feature part(a) which is option 7)
+// Partner Name : Liew Yong Hong (option 2,5,6 and advanced feature part (b) which is option 8)
 //==========================================================
 
 using System;
+using System.IO;
 using S10257172B_PRG2Assignment;
 using static System.Formats.Asn1.AsnWriter;
 
 class Program
 {
-    static void Main(string[] args)
+    public static void Main(string[] args)
     {
         Dictionary<int,Customer> customerDict = new Dictionary<int,Customer>(); //easy access to each customer by calling memberid(key)
-        Queue<Order>regQueue = new Queue<Order>();
-        Queue<Order>goldQueue = new Queue<Order>();
+        Queue<Customer>regQueue = new Queue<Customer>();
+        Queue<Customer>goldQueue = new Queue<Customer>();
         CreateCustomers(customerDict);
         Customer temp_customer;
         Order custOrder;
         bool yes = false;
         while(!yes)
         {
+            
             int choice = Menu(); // try catch blocks NOT needed for the option menu, presence of while loop for wrong int inputs
 
             switch (choice)
@@ -42,11 +44,11 @@ class Program
                     if (goldQueue.Count > 0)
                     {
                         Console.WriteLine("Gold member's queue: ");
-                        foreach (Order gq in goldQueue)
+                        foreach (Customer gq in goldQueue)
                         {
                             Console.WriteLine(gq); // Print information about the order outside the inner loop
 
-                            foreach (IceCream ic in gq.IceCreamList)
+                            foreach (IceCream ic in gq.CurrentOrder.IceCreamList)
                             {
                                 Console.WriteLine(ic);
                                 Console.WriteLine("-------------------------");
@@ -61,9 +63,15 @@ class Program
                     if (regQueue.Count > 0)
                     {
                         Console.WriteLine("Regular member's queue: ");
-                        foreach (Order rq in regQueue)
+                        foreach (Customer rq in regQueue)
                         {
                             Console.WriteLine(rq);
+
+                            foreach (IceCream ic in rq.CurrentOrder.IceCreamList)
+                            {
+                                Console.WriteLine(ic);
+                                Console.WriteLine("-------------------------");
+                            }
                         }
                         
                     }
@@ -95,7 +103,10 @@ class Program
                 case 6:
                     ModifyOrder();
                     break;
-                
+                case 7:
+                    ProcessOrderAndCheckout(); 
+
+                    break;
                 case 8:
                     totalCharged();
                     break;
@@ -112,7 +123,7 @@ class Program
             List<string> options = new List<string>()
             {
                 "List all customers","List all current orders","Register a new customer",
-                "Create an order","Display customer's order details","Modify order details","Process order", "Display monthly charged amounts", "Exit"
+                "Create an order","Display customer's order details","Modify order details", "Process order and checkout", "Display monthly charged amounts", "Exit"
             };
             for (int i = 0; i < options.Count; i++) //enumerates through the list of options
             {
@@ -159,6 +170,7 @@ class Program
                     Customer c1 = new Customer(str[0], Convert.ToInt32(str[1]), DateTime.ParseExact(str[2], "dd/MM/yyyy", null));
                     c1.Rewards = new PointCard(Convert.ToInt32(str[4]), Convert.ToInt32(str[5])); //assigns current points to each customer object
                     c1.Rewards.Tier = str[3]; //assigns membership tier to each customer object
+                    c1.Rewards.PunchCard = Convert.ToInt32(str.Count());
                     customerDict.Add(Convert.ToInt32(str[1]), c1);
                 }
             }
@@ -176,7 +188,7 @@ class Program
             c1.Rewards = new PointCard(0, 0);
             customerDict.Add(id_num, c1);
 
-            using(StreamWriter sw = new StreamWriter("customers.csv"))
+            using(StreamWriter sw = new StreamWriter("customers.csv",true))
             {
                 sw.WriteLine(c1);
                 Console.WriteLine("Application successful.");
@@ -411,11 +423,11 @@ class Program
                         Console.WriteLine(custOrder.CalculateTotal());
                         if (temp_customer.Rewards.Tier == "Gold")
                         {
-                            goldQueue.Enqueue(custOrder);
+                            goldQueue.Enqueue(temp_customer);
                         }
                         else
                         {
-                            regQueue.Enqueue(custOrder);
+                            regQueue.Enqueue(temp_customer);
                         }
                         Console.WriteLine("Order successfully made and queued");
                     }
@@ -1175,16 +1187,16 @@ class Program
                                             Console.WriteLine();
                                         }
 
-                                        custOrder = customer.CurrentOrder;
-                                        if (customer.Rewards.Tier == "Gold")
-                                        {
-                                            goldQueue.Enqueue(custOrder);
-                                        }
-                                        else
-                                        {
-                                            regQueue.Enqueue(custOrder);
-                                        }
-                                        Console.WriteLine("Order successfully made and queued");
+                                        //custOrder = customer.CurrentOrder;            doing this queues a completely new order 
+                                        //if (customer.Rewards.Tier == "Gold")
+                                        //{
+                                        //    goldQueue.Enqueue(custOrder);
+                                        //}
+                                        //else
+                                        //{
+                                        //    regQueue.Enqueue(custOrder);
+                                        //}
+                                        Console.WriteLine("Order successfully modified");
                                         break;
 
                                     }
@@ -1314,5 +1326,114 @@ class Program
             Console.WriteLine($"\nTotal:      ${total}");
         }
 
+
+        void ProcessOrderAndCheckout()
+        {
+            if (goldQueue.Count > 0 || regQueue.Count > 0)  // there must be an order in the queue for it to follow through
+            {
+                if (goldQueue.Count > 0) // gets first order in queue, gold queue takes priority
+                {
+                    temp_customer = goldQueue.Dequeue();
+                }
+                else
+                {
+                    temp_customer = regQueue.Dequeue();
+                }
+                custOrder = temp_customer.CurrentOrder;
+                double finalBill = custOrder.CalculateTotal();
+
+
+                double pointsEarned = Math.Floor(finalBill * 0.72);
+                int p = (int)pointsEarned;
+                temp_customer.Rewards.AddPoints(p); //points added based on gross price
+
+
+                List<double> prices = new List<double>();
+                foreach (IceCream ic in custOrder.IceCreamList)
+                {
+                    Console.WriteLine(ic);
+
+                    if (temp_customer.Rewards.PunchCard == 11) //11th ice cream comes free of charge, after which the punch card is reset back to 0
+                    {
+                        temp_customer.Rewards.PunchCard = 0;
+                        temp_customer.Rewards.Punch();
+                        prices.Add(0);
+                    }
+                    else
+                    {
+                        prices.Add(ic.CalculatePrice());
+                        temp_customer.Rewards.PunchCard++; //increment the punch card for every ice cream in the order
+                    }
+                }
+
+                Console.WriteLine("Current Total: ${0}\nMembership Status: {1}\nCurrent Points: {2}", finalBill, temp_customer.Rewards.Tier, temp_customer.Rewards.Points);
+
+                bool today = temp_customer.IsBirthday();
+
+                if (today) //birthday check 
+                {
+                    Console.WriteLine("Happy birthday! The most expensive ice cream in your order is on the house!");
+                    double mostEx = prices.Max();
+                    finalBill -= mostEx;
+                }
+
+                if (temp_customer.Rewards.Tier == "Original") //original tier members cannot redeem points 
+                {
+                    Console.WriteLine("Net price: ${0}\nPress any key to make payment.", finalBill);
+                    Console.ReadKey();
+                    custOrder.TimeFulfilled = DateTime.Now;
+                    temp_customer.OrderHistory.Add(custOrder);
+                    Console.WriteLine("Payment made with order fulfilled and added to history.");
+                }
+
+                bool check = false;
+                while (!check)
+                {
+                    Console.Write("Your current net price is ${0}\nPoints available: {1}\nWould you like to redeem your points? [Y/N]: ",
+                        finalBill, temp_customer.Rewards.Points);
+                    string? redeemCheck = Console.ReadLine();
+                    redeemCheck = redeemCheck.ToLower().Trim(); //addresses the problem of case sensitivity 
+                    switch (redeemCheck)
+                    {
+                        case "y": //executes if members want to redeem their points.
+                            check = true;
+                            Console.Write("Enter the number of points you would like to redeem: ");
+                            int numPoints = Convert.ToInt32(Console.ReadLine());
+                            temp_customer.Rewards.RedeemPoints(numPoints);
+                            double offset = numPoints * 0.02;
+                            finalBill -= offset;
+                            Console.WriteLine("Net price: ${0}\nPress any key to make payment.", finalBill);
+                            Console.ReadKey();
+                            custOrder.TimeFulfilled = DateTime.Now;
+                            temp_customer.OrderHistory.Add(custOrder);
+                            Console.WriteLine("Payment made with order fulfilled and added to history.");
+
+                            break;
+                        case "n": //executes if members do not want to redeem their points
+                            check = true;
+                            Console.WriteLine("Net price: ${0}\nPress any key to make payment.", finalBill);
+                            Console.ReadKey();
+                            custOrder.TimeFulfilled = DateTime.Now;
+                            temp_customer.OrderHistory.Add(custOrder);
+                            Console.WriteLine("Payment made with order fulfilled and added to history.");
+                            break;
+                        default: //executes if customer enters anything other than y or n
+                            Console.WriteLine("Invalid choice entered, try again.");
+                            break;
+                    }
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("No orders to process in either queue.");
+            }
+
+        }
+
+
+
+
     }
+    
 }
