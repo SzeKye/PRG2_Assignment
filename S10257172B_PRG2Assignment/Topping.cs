@@ -1,7 +1,7 @@
 ﻿//==========================================================
 // Student Number : S10257172B
 // Student Name : Loh Sze Kye
-// Partner Name : 
+// Partner Name : Liew Yong Hong
 //==========================================================
 
 
