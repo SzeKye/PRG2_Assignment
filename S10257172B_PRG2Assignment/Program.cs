@@ -20,7 +20,88 @@ class Program
         Customer temp_customer;
         Order custOrder;
         bool yes = false;
-        while(!yes)
+        string path = "orders.csv";
+        string[] csvLines = File.ReadAllLines(path);
+        string path2 = "customers.csv";
+        string[] csvLines2 = File.ReadAllLines(path2);
+        int ordercustID;
+        for (int i = 1; i < csvLines2.Length; i++)
+        {
+            string[] data = csvLines2[i].Split(",");
+            Customer c = new Customer(data[0], Convert.ToInt32(data[1]), DateTime.ParseExact(data[2], "dd/MM/yyyy", null));
+
+        }
+        for (int i = 1; i < csvLines.Length; i++)
+        {
+            List<Flavour> flavoursList = new List<Flavour>();
+            List<Topping> toppingList = new List<Topping>();
+
+            string[] data = csvLines[i].Split(',');
+            Order order = new Order(Convert.ToInt16(data[0]), DateTime.ParseExact(data[2], "dd/MM/yyyy HH:mm", null));
+            order.TimeFulfilled = DateTime.ParseExact(data[3], "dd/MM/yyyy HH:mm", null);
+            ordercustID = Convert.ToInt32(data[1]);
+            string[] flavourData = new string[] { data[8], data[9], data[10] };
+            string[] toppingData = new string[] { data[11], data[12], data[13], data[14] };
+            IceCream iceCream = null;
+            bool dipped = false;
+            bool premium = false;
+            int flavourCount = 0;
+            foreach (string flavour in flavourData)
+            {
+
+
+                if (!string.IsNullOrEmpty(flavour))
+                {
+                    if (flavour == "Ube" || flavour == "Durian" || flavour == "Sea Salt")
+                    {
+                        premium = true;
+
+                    }
+                    flavourCount = 1;
+                    flavoursList.Add(new Flavour(flavour, premium, flavourCount));
+                }
+
+            }
+
+
+
+            foreach (string topping in toppingData)
+            {
+                if (!string.IsNullOrEmpty(topping))
+                {
+                    toppingList.Add(new Topping(topping));
+                }
+            }
+
+            if (data[4] == "Cup")
+            {
+                iceCream = new Cup(data[4], Convert.ToInt32(data[5]), flavoursList, toppingList);
+            }
+            else if (data[4] == "Cone")
+            {
+                if (data[6] == "TRUE")
+                {
+                    dipped = true;
+                }
+                iceCream = new Cone(data[4], Convert.ToInt32(data[5]), flavoursList, toppingList, dipped);
+            }
+            else if (data[4] == "Waffle")
+            {
+
+                iceCream = new Waffle(data[4], Convert.ToInt32(data[5]), flavoursList, toppingList, data[7]);
+            }
+
+            iceCream.Flavours = new List<Flavour>(flavoursList);
+            iceCream.Toppings = new List<Topping>(toppingList);
+            order.AddIceCream(iceCream);
+            if (customerDict.ContainsKey(ordercustID))
+            {
+                customerDict[ordercustID].OrderHistory.Add(order);
+
+            }
+
+        }
+        while (!yes)
         {
             
             int choice = Menu(); // try catch blocks NOT needed for the option menu, presence of while loop for wrong int inputs
@@ -460,88 +541,6 @@ class Program
             {
                 Console.WriteLine("{0,-10} {1,-10} {2,-10}", cust.Name, cust.Memberid, cust.Dob.ToString("dd/MM/yyyy"));
                 cust.OrderHistory.Clear();
-            }
-            
-            int ordercustID;
-            string path = "orders.csv";
-            string[] csvLines = File.ReadAllLines(path);
-            string path2 = "customers.csv";
-            string[] csvLines2 = File.ReadAllLines(path2);
-            for (int i = 1; i < csvLines2.Length; i++)
-            {
-                string[] data = csvLines2[i].Split(",");
-                Customer c = new Customer(data[0], Convert.ToInt32(data[1]), DateTime.ParseExact(data[2], "dd/MM/yyyy", null));
-
-            }
-            for (int i = 1; i < csvLines.Length; i++)
-            {
-                List<Flavour> flavoursList = new List<Flavour>();
-                List<Topping> toppingList = new List<Topping>();
-
-                string[] data = csvLines[i].Split(',');
-                Order order = new Order(Convert.ToInt16(data[0]), DateTime.ParseExact(data[2], "dd/MM/yyyy HH:mm", null));
-                order.TimeFulfilled = DateTime.ParseExact(data[3], "dd/MM/yyyy HH:mm", null);
-                ordercustID = Convert.ToInt32(data[1]);
-                string[] flavourData = new string[] { data[8], data[9], data[10] };
-                string[] toppingData = new string[] { data[11], data[12], data[13], data[14] };
-                IceCream iceCream = null;
-                bool dipped = false;
-                bool premium = false;
-                int flavourCount = 0;
-                foreach (string flavour in flavourData)
-                {
-                    
-                    
-                    if (!string.IsNullOrEmpty(flavour))
-                    {
-                        if (flavour == "Ube" || flavour == "Durian" || flavour == "Sea Salt")
-                        {
-                            premium = true;
-
-                        }
-                        flavourCount = 1;
-                        flavoursList.Add(new Flavour(flavour, premium, flavourCount));
-                    }
-                    
-                }
-                
-
-
-                foreach (string topping in toppingData)
-                {
-                    if (!string.IsNullOrEmpty(topping))
-                    {   
-                        toppingList.Add(new Topping(topping));
-                    }
-                }
-                
-                if (data[4] == "Cup")
-                {
-                    iceCream = new Cup(data[4], Convert.ToInt32(data[5]), flavoursList, toppingList);
-                }
-                else if (data[4] == "Cone")
-                {
-                    if (data[6] == "TRUE")
-                    {
-                        dipped = true;
-                    }
-                    iceCream = new Cone(data[4], Convert.ToInt32(data[5]), flavoursList, toppingList, dipped);
-                }
-                else if (data[4] == "Waffle")
-                {
-                   
-                    iceCream = new Waffle(data[4], Convert.ToInt32(data[5]), flavoursList, toppingList, data[7]);
-                }
-
-                iceCream.Flavours = new List<Flavour>(flavoursList);
-                iceCream.Toppings = new List<Topping>(toppingList);
-                order.AddIceCream(iceCream);
-                if (customerDict.ContainsKey(ordercustID))
-                {
-                    customerDict[ordercustID].OrderHistory.Add(order);
-                    
-                }
-
             }
             while (true)
             {

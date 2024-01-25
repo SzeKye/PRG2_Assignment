@@ -25,47 +25,54 @@ namespace S10257172B_PRG2Assignment
         }
         public override double CalculatePrice()
         {
-            List<Array> price = new List<Array>();
             double total_price = 0;
-            using (StreamReader sr = new StreamReader("options.csv"))
+            if (WaffleFlavour.ToLower() == "pandan" || WaffleFlavour.ToLower() == "red velvet" || WaffleFlavour.ToLower() == "charcoal")
             {
-                bool z = false;
-                string? s;
-                while ((s = sr.ReadLine()) != null)
+                total_price += 3;
+            }
+            if (Scoops == 1)
+            {
+                total_price += 7;
+                foreach (Flavour f in Flavours)
                 {
-                    if (!z)
+                    if (f.Premium == true)
                     {
-                        z = true;
-                        continue;
-                    }
-                    string[] str = s.Split(",");
-                    if (str[0] == "Waffle")
-                    {
-                        if (Scoops == (Convert.ToInt32(str[1])))
-                        {
-                            if (WaffleFlavour == str[3].ToLower())
-                            {
-                                total_price += Convert.ToDouble(str[4]);
-
-                            }
-                        }
-                    }
-                    else
-                    {
-                        continue;
+                        total_price += 2;
                     }
                 }
-
+                total_price += Toppings.Count();
+                return total_price;
             }
-            total_price += Toppings.Count();
-            foreach (Flavour f in Flavours)
+            else if (Scoops == 2)
             {
-                if (f.Premium == true)
+                total_price += 8.5;
+                foreach (Flavour f in Flavours)
                 {
-                    total_price += (f.Quantity * 2);
+                    if (f.Premium == true)
+                    {
+                        total_price += 2;
+                    }
                 }
+                total_price += Toppings.Count();
+                return total_price;
             }
-            return total_price;
+            else if (Scoops == 3)
+            {
+                total_price += 9.5;
+                foreach (Flavour f in Flavours)
+                {
+                    if (f.Premium == true)
+                    {
+                        total_price += 2;
+                    }
+                }
+                total_price += Toppings.Count();
+                return total_price;
+            }
+            else
+            {
+                return 0;
+            }
         }
         public override string ToString()
         {
