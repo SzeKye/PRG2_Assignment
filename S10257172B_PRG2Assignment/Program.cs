@@ -744,7 +744,7 @@ class Program
                                                     {
                                                         premium = true;
                                                     }
-                                                    customer.CurrentOrder.IceCreamList[option - 1].Flavours.Add(new Flavour(flavour, premium, 1));
+                                                    customer.CurrentOrder.IceCreamList[option - 1].Flavours.Add(new Flavour(flavour, premium));
                                                 }
 
                                                 break;
@@ -760,7 +760,7 @@ class Program
                                                     {
                                                         premium = true;
                                                     }
-                                                    customer.CurrentOrder.IceCreamList[option - 1].Flavours.Add(new Flavour(flavour, premium, 1));
+                                                    customer.CurrentOrder.IceCreamList[option - 1].Flavours.Add(new Flavour(flavour, premium));
                                                 }
                                                 break;
                                             }
@@ -775,7 +775,7 @@ class Program
                                                     {
                                                         premium = true;
                                                     }
-                                                    customer.CurrentOrder.IceCreamList[option - 1].Flavours.Add(new Flavour(flavour, premium, 1));
+                                                    customer.CurrentOrder.IceCreamList[option - 1].Flavours.Add(new Flavour(flavour, premium));
                                                 }
                                                 break;
                                             }
@@ -810,7 +810,7 @@ class Program
                                                     premium = true;
                                                 }
 
-                                                customer.CurrentOrder.IceCreamList[option - 1].Flavours[flavourOption - 1] = new Flavour(flavours, premium, 1);
+                                                customer.CurrentOrder.IceCreamList[option - 1].Flavours[flavourOption - 1] = new Flavour(flavours, premium);
 
                                             }
                                             catch (FormatException)
@@ -1084,7 +1084,7 @@ class Program
                                                             {
                                                                 premium = true;
                                                             }
-                                                            flavourList.Add(new Flavour(flavour, premium, 1));
+                                                            flavourList.Add(new Flavour(flavour, premium));
                                                         }
                                                         else
                                                         {
