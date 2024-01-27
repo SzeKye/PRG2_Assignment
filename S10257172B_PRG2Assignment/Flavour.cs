@@ -21,17 +21,14 @@ namespace S10257172B_PRG2Assignment
 
         public string Type {  get { return type; } set { type = value; } }
         public bool Premium { get {  return premium; } set {  premium = value; } }
-        public int Quantity { get { return quantity; } set { quantity = value; } }
-        public Flavour(string type, bool premium, int quantity)
+        public Flavour(string type, bool premium)
         {
             Type = type;
-            Premium = premium;
-            Quantity = quantity;
-            
+            Premium = premium;            
         }
         public override string ToString()
         {
-            return $"\nType: {Type,-12} Premium: {Premium,-6} Quantity: {Quantity}";
+            return $"\nType: {Type,-12} Premium: {Premium,-6}";
         }
     }
 }
