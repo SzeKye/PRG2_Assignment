@@ -17,7 +17,6 @@ namespace S10257172B_PRG2Assignment
     {
         private string type;
         private bool premium;
-        private int quantity;
 
         public string Type {  get { return type; } set { type = value; } }
         public bool Premium { get {  return premium; } set {  premium = value; } }

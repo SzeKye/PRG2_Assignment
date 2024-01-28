@@ -38,7 +38,24 @@ namespace S10257172B_PRG2Assignment
         }
         public Order MakeOrder() // returns a new order object associated to the customer
         {
-            Order newOrder = new Order(Memberid, DateTime.Now);
+            int id = 0;
+            using (StreamReader sr = new StreamReader("orders.csv")) 
+            {
+                string? s;
+                bool x = true;
+                while((s = sr.ReadLine()) != null)
+                {
+                    if (x)
+                    {
+                        x=false;
+                        continue;
+                    }
+                    string[] strings = s.Split(",");
+                    id = int.Parse(strings[0]);
+                }
+            }
+            id++;
+            Order newOrder = new Order(id, DateTime.Now);
             return newOrder; 
         }
         public bool IsBirthday()

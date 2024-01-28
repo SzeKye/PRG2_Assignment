@@ -57,7 +57,7 @@ namespace S10257172B_PRG2Assignment
         public override string ToString()
         {
             string tr = TimeReceived.ToString("dd/MM/yyyy h:mm:ss tt");
-            string tf = null;
+            string? tf = null;
             if(TimeFulfilled != null)
             {
                 tf += TimeFulfilled.Value.ToString("dd/MM/yyyy h:mm:ss tt");
