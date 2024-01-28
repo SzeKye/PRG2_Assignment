@@ -18,7 +18,6 @@
 - append the customer information to the customers.csv file
 - display a message to indicate registration status
 
-## In progress...
 4) Create a customer’s order
 - list the customers from the customers.csv
 - prompt user to select a customer and retrieve the selected customer
@@ -36,8 +35,7 @@ Validations (and feedback)
 e.g. invalid option, invalid number of scoops, invalid flavour, etc.
 - If user made a mistake in the entry, the program should inform the user via appropriate feedback
 
-## Not done!!!
-5) Display order details of a customer
+  5) Display order details of a customer
 - list the customers
 - prompt user to select a customer and retrieve the selected customer
 - retrieve all the order objects of the customer, past and current
@@ -77,5 +75,9 @@ if the customer is silver tier or above, prompt user asking how many of their po
 - retrieve all order objects that were successfully fulfilled within the inputted year
 - compute and display the monthly charged amounts breakdown & the total charged amounts for the input year
 
+## In progress...
+
+
+## Not done but idc!!!
 (c) Recommend a feature to be implemented (bonus marks are only awarded if advanced feature is completed)
 - you may gain up to 5 bonus marks if you propose and successfully implement an additional feature. You are REQUIRED to check with your tutor about your idea before implementing.
