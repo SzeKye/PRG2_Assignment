@@ -1575,7 +1575,7 @@ using System.IO;
 
                         if (temp_customer.Rewards.PunchCard == 11) //11th ice cream comes free of charge, after which the punch card is reset back to 0
                         {
-                            temp_customer.Rewards.Punch();
+                            //temp_customer.Rewards.Punch();
                             prices.Add(0);
                         }
                         else
