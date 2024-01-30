@@ -650,7 +650,7 @@ using System.IO;
                         /*This if else statement is to check whether the customer orderhistory is empty*/
                         if (customer.OrderHistory.Count != 0)
                         {
-                            Console.WriteLine("------------------------------------");
+                            Console.WriteLine("------------------------------------------");
                             foreach (Order o in customer.OrderHistory)
                             {
                                 Console.WriteLine(o.ToString()); //Show the order
@@ -659,7 +659,7 @@ using System.IO;
                                     Console.WriteLine(ic.ToString()); //Show the icecream details in the icecream list
                                     Console.WriteLine();
                                 }
-                                Console.WriteLine("------------------------------------");
+                                Console.WriteLine("------------------------------------------");
 
                             }
 
@@ -669,15 +669,20 @@ using System.IO;
                             Console.WriteLine("No order history");
                             Console.WriteLine();
                         }
-
-                        /*This if else statement is to check whether the customer currentorder is empty*/
-                        if (customer.CurrentOrder != null)
+                    Console.WriteLine();
+                    
+                    Console.WriteLine("Current order: ");
+                    /*This if else statement is to check whether the customer currentorder is empty*/
+                    if (customer.CurrentOrder != null)
                         {
+                            Console.WriteLine("------------------------------------------");
                             Console.WriteLine(customer.CurrentOrder.ToString()); //Show the order
                             foreach (IceCream ic in customer.CurrentOrder.IceCreamList)
                             {
                                 Console.WriteLine(ic.ToString()); //Show the icecream details in the icecream list
+                                Console.WriteLine("------------------------------------------");
                                 Console.WriteLine();
+
                             }
                         }
                         else
