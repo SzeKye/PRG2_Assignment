@@ -50,18 +50,15 @@ namespace S10257172B_PRG2Assignment
         }
         public void Punch()
         {
-            if (PunchCard >= 10)
+            using (StreamWriter sw = new StreamWriter("customers.csv",true))
             {
-                PunchCard = 10;
+                sw.WriteLine(PunchCard);
             }
-            else
-            {
-                PunchCard++;
-            }
+            
         }
         public override string ToString()
         {
-            return "";
+            return $"Point: {Points} PunchCard: {PunchCard} Tier: {Tier}";
         }
     }
 }

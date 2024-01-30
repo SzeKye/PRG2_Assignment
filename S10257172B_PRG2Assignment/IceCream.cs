@@ -36,8 +36,8 @@ namespace S10257172B_PRG2Assignment
         
         public override string ToString()
         {
-            string flavoursStr = string.Join("", Flavours.Select(f => f.ToString()));
-            string toppingsStr = string.Join(", ", Toppings.Select(t => t.ToString()));
+            string flavoursStr = string.Join("", Flavours.Select(f => f.ToString())); //Let the flavour list in flavour class to be a string
+            string toppingsStr = string.Join(", ", Toppings.Select(t => t.ToString())); //Let the topping list in topping class to be a string
             return $"Option: {Option.ToUpper()} Scoops: {Scoops} \nFlavours Details:\n{flavoursStr} \nToppings: {toppingsStr}\n";
         }
     }
