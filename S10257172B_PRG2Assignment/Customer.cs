@@ -60,7 +60,10 @@ namespace S10257172B_PRG2Assignment
         }
         public bool IsBirthday()
         {
-            if (Dob == DateTime.Today) {
+            int counter = 0;
+            bool isBirthdayToday =  Dob.Month == DateTime.Now.Month && Dob.Day == DateTime.Now.Day;
+            if (isBirthdayToday && counter == 0) {
+                counter++;
                 return true;
             }
             return false;

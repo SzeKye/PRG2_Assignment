@@ -1348,7 +1348,7 @@ class Program
                 {
                     Console.WriteLine($"Net Total: ${finalBill:F2}");
                 }
-                custOrder.TimeFulfilled = DateTime.Now;
+                custOrder.TimeFulfilled = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
                 temp_customer.OrderHistory.Add(custOrder);
 
                 using (StreamWriter sw = new StreamWriter("customers.csv", false)) //overwrites the csv to reflect the updated values
@@ -1365,7 +1365,7 @@ class Program
 
                 foreach (IceCream iic in custOrder.IceCreamList)
                 {
-                    string orderRecord = custOrder.Id + "," + temp_customer.Memberid + "," + custOrder.TimeReceived + "," + custOrder.TimeFulfilled + "," + char.ToUpper(iic.Option[0]) + iic.Option.Substring(1) + "," + iic.Scoops + ",";
+                    string orderRecord = custOrder.Id + "," + temp_customer.Memberid + "," + custOrder.TimeReceived.ToString("dd/MM/yyyy HH:mm") + "," + custOrder.TimeFulfilled+ "," + char.ToUpper(iic.Option[0]) + iic.Option.Substring(1) + "," + iic.Scoops + ",";
                     if (iic.Option == "cup")
                     {
                         orderRecord += ",,";
