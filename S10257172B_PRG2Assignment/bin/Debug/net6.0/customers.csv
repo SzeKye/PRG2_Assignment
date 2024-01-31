@@ -1,5 +1,5 @@
-Name,MemberID,DOB,MembershipStatus,MembershipPoints,PunchCard
-Amelia,685582,12/03/2000,Gold,161,10
+Name,MemberId,DOB,MembershipStatus,MembershipPoints,PunchCard
+Amelia,685582,12/03/2000,Gold,150,8
 Bob,245718,01/11/1966,Ordinary,5,1
 Cody,820215,20/01/1971,Silver,65,5
 Diana,161505,12/07/1998,Ordinary,10,2

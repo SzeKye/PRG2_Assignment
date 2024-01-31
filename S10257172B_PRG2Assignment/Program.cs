@@ -19,6 +19,7 @@ class Program
         Dictionary<int, Customer> customerDict = new Dictionary<int, Customer>(); //easy access to each customer by calling memberid(key)
         Queue<Customer> regQueue = new Queue<Customer>();
         Queue<Customer> goldQueue = new Queue<Customer>();
+        List<int> customerIds = new List<int>();
         CreateCustomers(customerDict);
         Customer temp_customer;
         Order custOrder;
@@ -1290,13 +1291,20 @@ class Program
                 }
 
 
-
                 bool today = temp_customer.IsBirthday();
                 if (today) //birthday check 
                 {
-                    Console.WriteLine("Happy birthday! The most expensive ice cream in your order is on the house!");
-                    double mostEx = prices.Max();
-                    finalBill -= mostEx;
+                    if (customerIds.Contains(temp_customer.Memberid))
+                    {
+                        Console.WriteLine("Sorry you have redeemed your free birthday ice cream.\nThank You for supporting us!");
+                    }
+                    else
+                    {
+                        customerIds.Add(temp_customer.Memberid);
+                        Console.WriteLine("Happy birthday! The most expensive ice cream in your order is on the house!");
+                        double mostEx = prices.Max();
+                        finalBill -= mostEx;
+                    }                    
                 }
                 double pointsEarned = Math.Floor(finalBill * 0.72);
                 int p = (int)pointsEarned;
@@ -1395,16 +1403,16 @@ class Program
                 foreach (IceCream iic in custOrder.IceCreamList)
                 {
                     string orderRecord = custOrder.Id + "," + temp_customer.Memberid + "," + custOrder.TimeReceived.ToString("dd/MM/yyyy HH:mm") + "," + custOrder.TimeFulfilled+ "," + char.ToUpper(iic.Option[0]) + iic.Option.Substring(1) + "," + iic.Scoops + ",";
-                    if (iic.Option == "cup")
+                    if (iic.Option.ToLower() == "cup")
                     {
                         orderRecord += ",,";
                     }
-                    else if (iic.Option == "cone")
+                    else if (iic.Option.ToLower() == "cone")
                     {
                         Cone cone = (Cone)iic;
                         orderRecord += cone.Dipped + ",,";
                     }
-                    else if (iic.Option == "waffle")
+                    else if (iic.Option.ToLower() == "waffle")
                     {
                         Waffle waffle = (Waffle)iic;
                         orderRecord += "," + waffle.WaffleFlavour + ",";
