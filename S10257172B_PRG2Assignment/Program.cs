@@ -30,7 +30,7 @@ class Program
         string path2 = "customers.csv";
         string[] csvLines2 = File.ReadAllLines(path2);
         int ordercustID;
-
+            
         /*This for loop is to read the file,store the customer data*/
         for (int i = 1; i < csvLines2.Length; i++)
         {
@@ -102,7 +102,7 @@ class Program
                 iceCream = new Waffle(data[4], Convert.ToInt32(data[5]), flavoursList, toppingList, data[7]);
             }
 
-
+                
             iceCream.Flavours = new List<Flavour>(flavoursList); //Create a Flavour class list and append the flavoursList inside
             iceCream.Toppings = new List<Topping>(toppingList); //Create a Topping class list adn append the toppingList inside
             order.AddIceCream(iceCream); //Add the icecream to the order
@@ -147,7 +147,7 @@ class Program
                         foreach (Customer gq in goldQueue)
                         {
                             Console.WriteLine(gq); // Print information about the order outside the inner loop
-
+                                
                             /*This foreach loop is to show all the detail of the icecream in the list*/
                             foreach (IceCream ic in gq.CurrentOrder.IceCreamList)
                             {
@@ -619,7 +619,7 @@ class Program
                     Console.WriteLine("Invalid customer Member ID entered.");
                 }
                 catch (Exception ex)
-                {
+            {
                     Console.WriteLine("Invalid customer Member ID entered." + ex.Message);
                 }
 
@@ -643,7 +643,7 @@ class Program
                 try
                 {
                     Console.Write("Select a customer by MemberID: "); //Ask for customer MemberID
-                    int id = Convert.ToInt32(Console.ReadLine());
+                    int id = Convert.ToInt32(Console.ReadLine()); 
                     Customer customer = customerDict[id]; //Set customer to be the customer with the MemberID
                     Console.WriteLine();
                     Console.WriteLine("Order History: ");
@@ -670,11 +670,11 @@ class Program
                         Console.WriteLine("No order history");
                         Console.WriteLine();
                     }
-                    Console.WriteLine();
-
-                    Console.WriteLine("Current order: ");
-                    /*This if else statement is to check whether the customer currentorder is empty*/
-                    if (customer.CurrentOrder != null)
+                Console.WriteLine();
+                    
+                Console.WriteLine("Current order: ");
+                /*This if else statement is to check whether the customer currentorder is empty*/
+                if (customer.CurrentOrder != null)
                     {
                         Console.WriteLine("------------------------------------------");
                         Console.WriteLine(customer.CurrentOrder.ToString()); //Show the order
@@ -733,7 +733,7 @@ class Program
                     if (customer.CurrentOrder != null) //Check whether customer currentorder is null, if not, execute the below code
                     {
                         /*This foreach loop is to output all the icecraem detail in the customer currentorder icecream list*/
-                        foreach (IceCream ic in customer.CurrentOrder.IceCreamList)
+                        foreach (IceCream ic in customer.CurrentOrder.IceCreamList) 
                         {
                             Console.WriteLine(ic.ToString());
                             Console.WriteLine();
@@ -760,50 +760,49 @@ class Program
                             int option = Convert.ToInt32(Console.ReadLine());
                             if (option == 1) //Modify Icecream
                             {
-                                while (true)
+                            while (true)
+                            {
+                                /*Check whether the current order is null*/
+                                if (customer.CurrentOrder == null)
                                 {
-                                    /*Check whether the current order is null*/
-                                    if (customer.CurrentOrder == null)
-                                    {
-                                        Console.WriteLine("You do not have current order!");
-                                        Console.WriteLine();
-                                        break;
-                                    }
-                                    Console.Write("Select which ice cream you want to modify by the order(1,2,3,.. 0 to exit): "); //Ask for the icecream they want to modify
-                                    int icOption = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine("You do not have current order!");
                                     Console.WriteLine();
-                                    if (icOption == 0) //0 to exit
-                                    {
-                                        break;
-                                    }
-
-                                    /*This if statement is to check whether the input icOption is in range*/
-                                    if (customer.CurrentOrder.IceCreamList.Count() < icOption || icOption < 0)
-                                    {
-                                        Console.WriteLine("Please enter a valid ice cream option in range!");
-                                        Console.WriteLine();
-                                        continue;
-                                    }
-
-                                    customer.CurrentOrder.ModifyIceCream(icOption - 1); //Modify the icecream by calling the class method
-                                                                                        //Code below is to replace the customer current order in the queue
-                                    foreach (Customer c in goldQueue)
-                                    {
-                                        if (c.Memberid == customer.Memberid)
-                                        {
-                                            c.CurrentOrder = customer.CurrentOrder;
-                                        }
-                                    }
-                                    foreach (Customer c in regQueue)
-                                    {
-                                        if (c.Memberid == customer.Memberid)
-                                        {
-                                            c.CurrentOrder = customer.CurrentOrder;
-                                        }
-                                    }
-
+                                    break;
+                                }
+                                Console.Write("Select which ice cream you want to modify by the order(1,2,3,.. 0 to exit): "); //Ask for the icecream they want to modify
+                                int icOption = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (icOption == 0) //0 to exit
+                                {
+                                    break;
                                 }
 
+                                /*This if statement is to check whether the input icOption is in range*/
+                                if (customer.CurrentOrder.IceCreamList.Count() < icOption || icOption < 0)
+                                {
+                                    Console.WriteLine("Please enter a valid ice cream option in range!");
+                                    Console.WriteLine();
+                                    continue;
+                                }
+
+                                customer.CurrentOrder.ModifyIceCream(icOption-1); //Modify the icecream by calling the class method
+                                foreach (Customer c in goldQueue)
+                                {
+                                    if (c.Memberid == customer.Memberid)
+                                    {
+                                        c.CurrentOrder = customer.CurrentOrder;
+                                    }
+                                }
+                                foreach (Customer c in regQueue)
+                                {
+                                    if (c.Memberid == customer.Memberid)
+                                    {
+                                        c.CurrentOrder = customer.CurrentOrder;
+                                    }
+                                }
+
+                                }
+                                    
                             }
                             else if (option == 2) //Add new icecream
                             {
@@ -821,16 +820,16 @@ class Program
                                         int scoops = 0;
                                         Console.Write("Enter your ice cream option (Cup/Cone/Waffle) (0 to exit): ");
                                         string icOption = Console.ReadLine();
-                                        if (icOption == "0")
-                                        {
-                                            break;
-                                        }
-                                        if (!(icOption.ToLower() == "cup" || icOption.ToLower() == "cone" || icOption.ToLower() == "waffle"))
+                                    if (icOption == "0")
+                                    {
+                                        break;
+                                    }
+                                    if (!(icOption.ToLower() == "cup" || icOption.ToLower() == "cone" || icOption.ToLower() == "waffle"))
                                         {
                                             Console.WriteLine("Please enter a valid option!");
                                             continue;
                                         }
-
+                                            
                                         int a = 0;
                                         bool premium = false;
                                         if (optionList.Contains(icOption.ToLower()) == true)
@@ -866,7 +865,7 @@ class Program
                                                     else //throw new exception if input is invalid
                                                     {
                                                         throw new Exception("Please enter a valid scoops!");
-
+                                                            
                                                     }
                                                 }
                                                 catch (Exception ex) //Catch the error
@@ -889,13 +888,13 @@ class Program
                                                             {
                                                                 premium = true;
                                                             }
-
+                                                                
                                                             flavourList.Add(new Flavour(flavour, premium)); //Add the flavour to the flavourList
                                                         }
                                                         else //throw new exception is flavour input is invalid
                                                         {
                                                             Console.WriteLine("Please enter a valid flavour!");
-                                                            i--; // Use to iterate the current loop again if input is invalid
+                                                            i--;
                                                             continue;
                                                         }
                                                     }
@@ -926,8 +925,8 @@ class Program
                                                 else //show error message if topping input is invalid
                                                 {
                                                     Console.WriteLine("Please enter a valid topping!");
-                                                    i--; // Use to iterate the current loop again if input is invalid
-
+                                                    i--;
+                                                    
                                                 }
                                             }
 
@@ -998,21 +997,21 @@ class Program
                                             Console.WriteLine("Please input a valid option!");
                                             Console.WriteLine();
                                         }
-
+                                        
 
                                         Console.WriteLine("Order successfully modified");
 
                                         //Code below is to replace the customer current order in the queue
-                                        foreach (Customer c in goldQueue)
+                                        foreach(Customer c in goldQueue)
                                         {
-                                            if (c.Memberid == customer.Memberid)
+                                            if(c.Memberid == customer.Memberid)
                                             {
                                                 c.CurrentOrder = customer.CurrentOrder;
                                             }
                                         }
-                                        foreach (Customer c in regQueue)
+                                        foreach(Customer c in regQueue)
                                         {
-                                            if (c.Memberid == customer.Memberid)
+                                            if(c.Memberid == customer.Memberid)
                                             {
                                                 c.CurrentOrder = customer.CurrentOrder;
                                             }
@@ -1033,7 +1032,7 @@ class Program
                                 {
                                     try
                                     {
-                                        if (customer.CurrentOrder == null) //Check if currentorder is null or not,if yes, show the below message and break;
+                                        if(customer.CurrentOrder == null) //Check if currentorder is null or not,if yes, show the below message and break;
                                         {
                                             Console.WriteLine("You do not have current order!");
                                             Console.WriteLine();
@@ -1050,26 +1049,11 @@ class Program
                                             }
                                             else
                                             {
-                                                customer.CurrentOrder.DeleteIceCream(icDelete - 1); //Delete the icecream they selected
-                                                //Code below is to replace the customer current order in the queue
-                                                foreach (Customer c in goldQueue)
-                                                {
-                                                    if (c.Memberid == customer.Memberid)
-                                                    {
-                                                        c.CurrentOrder = customer.CurrentOrder;
-                                                    }
-                                                }
-                                                foreach (Customer c in regQueue)
-                                                {
-                                                    if (c.Memberid == customer.Memberid)
-                                                    {
-                                                        c.CurrentOrder = customer.CurrentOrder;
-                                                    }
-                                                }
+                                                customer.CurrentOrder.DeleteIceCream(icDelete -1); //Delete the icecream they selected
                                             }
                                             break;
                                         }
-                                        else if (icDelete == 0) //0 to exit
+                                        else if(icDelete == 0) //0 to exit
                                         {
                                             break;
                                         }
@@ -1106,7 +1090,7 @@ class Program
                         catch (FormatException)
                         {
                             Console.WriteLine("Please enter a valid option in correct format!");
-                            continue;
+                        continue;
                         }
 
                         catch (Exception ex)
@@ -1244,8 +1228,8 @@ class Program
                 }
 
 
-                bool today = temp_customer.IsBirthday();
 
+                bool today = temp_customer.IsBirthday();
                 if (today) //birthday check 
                 {
                     Console.WriteLine("Happy birthday! The most expensive ice cream in your order is on the house!");
@@ -1288,7 +1272,7 @@ class Program
                                         if (numPoints <= temp_customer.Rewards.Points && numPoints > 0) //ensures that no. of redeemed is lower than available points and not a negative
                                         {
                                             double offset = numPoints * 0.02;
-                                            if (finalBill - offset < 0)
+                                            if (finalBill-offset < 0)
                                             {
                                                 Console.WriteLine("Redeeming points to make your total negative is not allowed. Try again.");
                                                 continue;
@@ -1400,5 +1384,12 @@ class Program
             }
 
         }
+
+
+
+
+
+
+
     }
 }
