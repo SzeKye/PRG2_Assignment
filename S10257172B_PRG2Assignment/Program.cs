@@ -803,7 +803,6 @@ class Program
                                 }
                                 foreach (var cust in customerDict) //Replace the current order in the customerdict also
                                 {
-                                    Customer c = cust.Value;
                                     if (cust.Value.Memberid == customer.Memberid)
                                     {
                                         cust.Value.CurrentOrder = customer.CurrentOrder;
@@ -1044,7 +1043,6 @@ class Program
 
                                         foreach (var cust in customerDict) //Replace the current order in the customerdict also
                                         {
-                                            
                                             if (cust.Value.Memberid == customer.Memberid)
                                             {
                                                 cust.Value.CurrentOrder = customer.CurrentOrder;
