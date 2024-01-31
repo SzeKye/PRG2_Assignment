@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <None Update="customers.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="flavours.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -24,7 +24,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="orders.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="toppings.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

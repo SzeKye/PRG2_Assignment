@@ -1292,20 +1292,23 @@ class Program
 
 
                 bool today = temp_customer.IsBirthday();
+                
                 if (today) //birthday check 
                 {
-                    if (customerIds.Contains(temp_customer.Memberid))
+                    if (customerIds.Contains(temp_customer.Memberid) == true) //checks if this is the customers second order 
                     {
                         Console.WriteLine("Sorry you have redeemed your free birthday ice cream.\nThank You for supporting us!");
                     }
                     else
                     {
                         customerIds.Add(temp_customer.Memberid);
-                        Console.WriteLine("Happy birthday! The most expensive ice cream in your order is on the house!");
+                        Console.WriteLine("Happy birthday! The most expensive ice cream in your order is on the house!"); //once this has happened the member id is added to list
                         double mostEx = prices.Max();
                         finalBill -= mostEx;
-                    }                    
+                    }
                 }
+                
+                
                 double pointsEarned = Math.Floor(finalBill * 0.72);
                 int p = (int)pointsEarned;
                 temp_customer.Rewards.AddPoints(p); //points added based on price after factoring in punch card and birthday
@@ -1344,7 +1347,7 @@ class Program
                                             double offset = numPoints * 0.02;
                                             if (finalBill-offset < 0)
                                             {
-                                                Console.WriteLine("Redeeming points to make your total negative is not allowed. Try again.");
+                                                Console.WriteLine("Redeeming points to make your total negative is not allowed. Try again."); //cannot have negative final bills
                                                 continue;
                                             }
                                             else
@@ -1424,7 +1427,7 @@ class Program
                             string flavourWrite = char.ToUpper(iic.Flavours[i].Type[0]) + iic.Flavours[i].Type.Substring(1);
                             orderRecord += flavourWrite + ",";
                         }
-                        catch (ArgumentOutOfRangeException)
+                        catch (ArgumentOutOfRangeException) //if there isnt a flavour in the list at said index this exception is thrown 
                         {
                             orderRecord += ",";
                         }
