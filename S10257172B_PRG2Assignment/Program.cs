@@ -46,8 +46,8 @@ class Program
             List<Topping> toppingList = new List<Topping>();
 
             string[] data = csvLines[i].Split(',');
-            Order order = new Order(Convert.ToInt16(data[0]), DateTime.ParseExact(data[2], "dd/MM/yyyy HH:mm", null));
-            order.TimeFulfilled = DateTime.ParseExact(data[3], "dd/MM/yyyy HH:mm", null);
+            Order order = new Order(Convert.ToInt16(data[0]), DateTime.Parse(data[2]));
+            order.TimeFulfilled = DateTime.Parse(data[3]);
             ordercustID = Convert.ToInt32(data[1]);
             string[] flavourData = new string[] { data[8], data[9], data[10] };
             string[] toppingData = new string[] { data[11], data[12], data[13], data[14] };
