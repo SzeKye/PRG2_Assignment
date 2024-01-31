@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\PRG2\\PRG2_Assignment\\S10257172B_PRG2Assignment\\S10257172B_PRG2Assignment.csproj",
+      "projectUniqueName": "C:\\PRG2\\New folder\\PRG2_Assignment\\S10257172B_PRG2Assignment\\S10257172B_PRG2Assignment.csproj",
       "projectName": "S10257172B_PRG2Assignment",
-      "projectPath": "C:\\PRG2\\PRG2_Assignment\\S10257172B_PRG2Assignment\\S10257172B_PRG2Assignment.csproj",
+      "projectPath": "C:\\PRG2\\New folder\\PRG2_Assignment\\S10257172B_PRG2Assignment\\S10257172B_PRG2Assignment.csproj",
       "packagesPath": "C:\\Users\\lohsz\\.nuget\\packages\\",
-      "outputPath": "C:\\PRG2\\PRG2_Assignment\\S10257172B_PRG2Assignment\\obj\\",
+      "outputPath": "C:\\PRG2\\New folder\\PRG2_Assignment\\S10257172B_PRG2Assignment\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\lohsz\\AppData\\Roaming\\NuGet\\NuGet.Config",
