@@ -65,7 +65,7 @@ namespace S10257172B_PRG2Assignment
                     try
                     {
                         Console.Write("Which option do you want to pick?(Waffle,Cone,Cup) (0 to exit): "); //Ask for the icecream option they want
-                        string modify = Console.ReadLine();
+                        string? modify = Console.ReadLine();
 
                         switch (modify.ToLower())
                         {
@@ -73,7 +73,7 @@ namespace S10257172B_PRG2Assignment
                                 while (true)
                                 {
                                     Console.Write("Which waffle flavour do you want? (Red velvet, Charcoal, Pandan, Original): "); //Ask for waffle flavour 
-                                    string wf = Console.ReadLine();
+                                    string? wf = Console.ReadLine();
                                     if (waffleFlavour.Contains(wf.ToLower())) //check if waffle flavour input is in the option
                                     {
                                         /*Replace the customer currentorder selected icecream to the new Waffle*/
@@ -92,7 +92,7 @@ namespace S10257172B_PRG2Assignment
                                 while (true)
                                 {
                                     Console.Write("Do you want it to be chocolate dipped? (Y/N): "); //Ask if they want cone to be dipped
-                                    string dipped = Console.ReadLine();
+                                    string? dipped = Console.ReadLine();
                                     bool dippedBool = false;
                                     if (dipped.ToLower() == "y" || dipped.ToLower() == "n") //check if dipped input is in the option
                                     {
@@ -138,7 +138,7 @@ namespace S10257172B_PRG2Assignment
                     while (true)
                     {
                         Console.Write("How many scoops you want? (single,double,triple): "); //Ask for scoops
-                        string scoops = Console.ReadLine();
+                        string? scoops = Console.ReadLine();
                         int a = 0;
                         bool premium = false;
                         IceCreamList[Id].Flavours.Clear(); //Clear the flavour as scoops is changed
@@ -153,7 +153,7 @@ namespace S10257172B_PRG2Assignment
                             for (int i = 0; i < a; i++)
                             {
                                 Console.Write("Enter flavour of scoops (Durian, Ube, Sea salt, Vanilla, Strawberry, Chocolate): ");
-                                string flavour = Console.ReadLine();
+                                string? flavour = Console.ReadLine();
                                 if (flavourList.Contains(flavour.ToLower()))
                                 {
                                     if(premiumList.Contains(flavour.ToLower())) //Check if the flavour is premium
@@ -183,7 +183,7 @@ namespace S10257172B_PRG2Assignment
                             for (int i = 0; i < a; i++)
                             {
                                 Console.Write("Enter flavour of scoops (Durian, Ube, Sea salt, Vanilla, Strawberry, Chocolate): ");
-                                string flavour = Console.ReadLine();
+                                string? flavour = Console.ReadLine();
                                 if (flavourList.Contains(flavour.ToLower()))
                                 {
                                     if (premiumList.Contains(flavour.ToLower())) //Check if the flavour is premium
@@ -212,7 +212,7 @@ namespace S10257172B_PRG2Assignment
                             for (int i = 0; i < a; i++)
                             {
                                 Console.Write("Enter flavour of scoops (Durian, Ube, Sea salt, Vanilla, Strawberry, Chocolate): ");
-                                string flavour = Console.ReadLine();
+                                string? flavour = Console.ReadLine();
                                 if (flavourList.Contains(flavour.ToLower()))
                                 {
                                     if (premiumList.Contains(flavour.ToLower())) //Check if the flavour is premium
@@ -264,7 +264,7 @@ namespace S10257172B_PRG2Assignment
                                 continue;
                             }
                             Console.Write("Which flavour do you want? (Vanilla, Chocolate, Strawberry, Durian, Ube, Sea salt) "); //Ask for flavour
-                            string flavours = Console.ReadLine();
+                            string? flavours = Console.ReadLine();
                             if (flavourList.Contains(flavours.ToLower()))
                             {
                                 if (premiumList.Contains(flavours.ToLower())) //Check if the flavour is premium
@@ -328,7 +328,7 @@ namespace S10257172B_PRG2Assignment
                                         if (toppingOption > 0 && toppingOption <= IceCreamList[Id].Toppings.Count()) //Check if the toppingOption is in range in icecream topping list
                                         {
                                             Console.Write("Which topping do you want? (Sprinkles, Mochi, Sago, Oreos) ");
-                                            string topping = Console.ReadLine();
+                                            string? topping = Console.ReadLine();
                                             Console.WriteLine();
                                             if (topping.ToLower() == "sprinkles" || topping.ToLower() == "mochi" || topping.ToLower() == "sago" || topping.ToLower() == "oreos") //
                                             {
@@ -370,7 +370,7 @@ namespace S10257172B_PRG2Assignment
                                     try
                                     {
                                         Console.Write("Enter the topping you wish to add on (Sprinkles, Mochi, Sago, Oreos) (enter nil to stop): ");
-                                        string t = Console.ReadLine();
+                                        string? t = Console.ReadLine();
 
                                         if (t.ToLower() == "sprinkles" || t.ToLower() == "mochi" || t.ToLower() == "sago" || t.ToLower() == "oreos")
                                         {
@@ -454,7 +454,7 @@ namespace S10257172B_PRG2Assignment
                         try
                         {
                             Console.Write("Do you want it to be dipped? (Y/N) ");
-                            string dipped = Console.ReadLine();
+                            string? dipped = Console.ReadLine();
                             bool dippedBool = false;
 
                             if (dipped.ToLower() == "y" || dipped.ToLower() == "n") //Check if input is correct
@@ -490,7 +490,7 @@ namespace S10257172B_PRG2Assignment
                         try
                         {
                             Console.Write("What waffle flavour do you want? (Red velvet, charcoal, pandan, original) ");
-                            string wf = Console.ReadLine();
+                            string? wf = Console.ReadLine();
                             if (waffleFlavour.Contains(wf.ToLower())) //Check if waffleflavour is in the option
                             {
                                 /*Replace the icecream to the new Waffle*/

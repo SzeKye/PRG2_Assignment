@@ -47,12 +47,18 @@ namespace S10257172B_PRG2Assignment
         {
             Points -= points;
             Console.WriteLine("Points redeemed successfully.");
+
+
         }
         public void Punch()
         {
-            using (StreamWriter sw = new StreamWriter("customers.csv",true))
+            if (PunchCard == 10)
             {
-                sw.WriteLine(PunchCard);
+                PunchCard = 10;
+            }
+            else
+            {
+                PunchCard++;
             }
             
         }

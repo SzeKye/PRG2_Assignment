@@ -60,14 +60,15 @@ namespace S10257172B_PRG2Assignment
         }
         public bool IsBirthday()
         {
-            if (Dob == DateTime.Now) {
+            if (Dob == DateTime.Today) {
                 return true;
             }
             return false;
         }
         public override string ToString()
         {
-            return "";
+            string customerDetails = Name + "," + Memberid + "," + Dob.ToString("dd/MM/yyyy") + "," + Rewards.Tier + "," + Rewards.Points + "," + Rewards.PunchCard;
+            return customerDetails;
         }
     }
 }
