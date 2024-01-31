@@ -786,6 +786,7 @@ class Program
                                 }
 
                                 customer.CurrentOrder.ModifyIceCream(icOption-1); //Modify the icecream by calling the class method
+                                //Code below is to replace the customer current order in the queue
                                 foreach (Customer c in goldQueue)
                                 {
                                     if (c.Memberid == customer.Memberid)
@@ -894,7 +895,7 @@ class Program
                                                         else //throw new exception is flavour input is invalid
                                                         {
                                                             Console.WriteLine("Please enter a valid flavour!");
-                                                            i--;
+                                                            i--; // Use to iterate the current loop again if input is invalid
                                                             continue;
                                                         }
                                                     }
@@ -925,7 +926,7 @@ class Program
                                                 else //show error message if topping input is invalid
                                                 {
                                                     Console.WriteLine("Please enter a valid topping!");
-                                                    i--;
+                                                    i--; // Use to iterate the current loop again if input is invalid
                                                     
                                                 }
                                             }
@@ -1050,6 +1051,21 @@ class Program
                                             else
                                             {
                                                 customer.CurrentOrder.DeleteIceCream(icDelete -1); //Delete the icecream they selected
+                                                //Code below is to replace the customer current order in the queue
+                                                foreach(Customer c in goldQueue)
+                                                {
+                                                    if(c.Memberid == customer.Memberid)
+                                                    {
+                                                        c.CurrentOrder = customer.CurrentOrder;
+                                                    }
+                                                }
+                                                foreach(Customer c in regQueue)
+                                                {
+                                                    if(c.Memberid == customer.Memberid)
+                                                    {
+                                                        c.CurrentOrder = customer.CurrentOrder;
+                                                    }
+                                                }
                                             }
                                             break;
                                         }
