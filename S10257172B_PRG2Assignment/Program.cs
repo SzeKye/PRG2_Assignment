@@ -717,7 +717,7 @@ class Program
             foreach (Customer cust in customerDict.Values)
             {
                 Console.WriteLine("{0,-10} {1,-10} {2,-10}", cust.Name, cust.Memberid, cust.Dob.ToString("dd/MM/yyyy"));
-                cust.OrderHistory.Clear();
+                
             }
 
             while (true)
@@ -799,6 +799,15 @@ class Program
                                     if (c.Memberid == customer.Memberid)
                                     {
                                         c.CurrentOrder = customer.CurrentOrder;
+                                    }
+                                }
+                                foreach (var cust in customerDict) //Replace the current order in the customerdict also
+                                {
+                                    Customer c = cust.Value;
+                                    if (c.Memberid == customer.Memberid)
+                                    {
+                                        c.CurrentOrder = customer.CurrentOrder;
+                                        break;
                                     }
                                 }
 
@@ -1033,6 +1042,15 @@ class Program
                                             }
                                         }
 
+                                        foreach (var cust in customerDict) //Replace the current order in the customerdict also
+                                        {
+                                            Customer c = cust.Value;
+                                            if (c.Memberid == customer.Memberid)
+                                            {
+                                                c.CurrentOrder = customer.CurrentOrder;
+                                                break;
+                                            }
+                                        }
 
                                         break;
 
@@ -1083,6 +1101,15 @@ class Program
                                                         c.CurrentOrder = customer.CurrentOrder;
                                                     }
                                                 }
+                                                foreach (var cust in customerDict) //Replace the current order in the customerdict also
+                                                {
+                                                    Customer c = cust.Value;
+                                                    if (c.Memberid == customer.Memberid)
+                                                    {
+                                                        c.CurrentOrder = customer.CurrentOrder;
+                                                        break;
+                                                    }
+                                                }
                                             }
                                             break;
                                         }
@@ -1118,6 +1145,7 @@ class Program
                             {
                                 throw new Exception("Please input a valid option!");
                             }
+                            
                             break;
                         }
                         catch (FormatException)
@@ -1143,9 +1171,11 @@ class Program
                             Console.WriteLine("------------------------------------");
                         }
                     }
+                    
                     break;
 
                 }
+
                 catch (FormatException) //Catch if member id is in incorrect format
                 {
                     Console.WriteLine("Input MemberID is in incorrect format!");
@@ -1190,16 +1220,17 @@ class Program
                         }
                         if (cust.CurrentOrder != null) //Check if current order is null or not, it not null, execute the below code
                         {
-                            foreach (IceCream ic in cust.CurrentOrder.IceCreamList) //Iterate every icecream in the current order icecream list
+
+                            if (cust.CurrentOrder.TimeFulfilled.HasValue && cust.CurrentOrder.TimeFulfilled.Value.Year == year) //This is statement is to check if the timefulfilled year is same as inputted year and timefulfilled is not empty
                             {
-                                if (cust.CurrentOrder.TimeFulfilled.HasValue && cust.CurrentOrder.TimeFulfilled.Value.Year == year) //This is statement is to check if the timefulfilled year is same as inputted year and timefulfilled is not empty
+                                foreach(IceCream ic in cust.CurrentOrder.IceCreamList)
                                 {
                                     string month = cust.CurrentOrder.TimeFulfilled.Value.ToString("MMM"); //Change month to the Jan,Feb format
                                     monthDictionary[month] += ic.CalculatePrice(); //Calculate icecream price then add to the dictionary
                                 }
+                                    
                             }
                         }
-
                     }
 
                     foreach (var kvp in monthDictionary) //This for each statement is to show the output of every month charged
