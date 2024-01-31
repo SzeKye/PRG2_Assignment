@@ -804,9 +804,9 @@ class Program
                                 foreach (var cust in customerDict) //Replace the current order in the customerdict also
                                 {
                                     Customer c = cust.Value;
-                                    if (c.Memberid == customer.Memberid)
+                                    if (cust.Value.Memberid == customer.Memberid)
                                     {
-                                        c.CurrentOrder = customer.CurrentOrder;
+                                        cust.Value.CurrentOrder = customer.CurrentOrder;
                                         break;
                                     }
                                 }
@@ -1044,10 +1044,10 @@ class Program
 
                                         foreach (var cust in customerDict) //Replace the current order in the customerdict also
                                         {
-                                            Customer c = cust.Value;
-                                            if (c.Memberid == customer.Memberid)
+                                            
+                                            if (cust.Value.Memberid == customer.Memberid)
                                             {
-                                                c.CurrentOrder = customer.CurrentOrder;
+                                                cust.Value.CurrentOrder = customer.CurrentOrder;
                                                 break;
                                             }
                                         }
@@ -1103,10 +1103,9 @@ class Program
                                                 }
                                                 foreach (var cust in customerDict) //Replace the current order in the customerdict also
                                                 {
-                                                    Customer c = cust.Value;
-                                                    if (c.Memberid == customer.Memberid)
+                                                    if (cust.Value.Memberid == customer.Memberid)
                                                     {
-                                                        c.CurrentOrder = customer.CurrentOrder;
+                                                        cust.Value.CurrentOrder = customer.CurrentOrder;
                                                         break;
                                                     }
                                                 }
@@ -1145,7 +1144,7 @@ class Program
                             {
                                 throw new Exception("Please input a valid option!");
                             }
-                            
+
                             break;
                         }
                         catch (FormatException)
