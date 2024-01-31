@@ -365,32 +365,29 @@ namespace S10257172B_PRG2Assignment
                             }
                             else if (toppingModify == 2) //Add topping
                             {
-                                while (true)
+                                if (IceCreamList[Id].Toppings.Count() == 4)
                                 {
-                                    try
+                                    Console.WriteLine("Maximum topping is 4!");
+                                    Console.WriteLine();
+                                }
+                                for (int i = IceCreamList[Id].Toppings.Count(); i < 4; i++)
+                                {
+                                    Console.Write("Enter the topping you wish to add on (Sprinkles, Mochi, Sago, Oreos) (enter nil to stop): ");
+                                    string? t = Console.ReadLine();
+                                    if (t.ToLower() == "sprinkles" || t.ToLower() == "mochi" || t.ToLower() == "sago" || t.ToLower() == "oreos")
                                     {
-                                        Console.Write("Enter the topping you wish to add on (Sprinkles, Mochi, Sago, Oreos) (enter nil to stop): ");
-                                        string? t = Console.ReadLine();
-
-                                        if (t.ToLower() == "sprinkles" || t.ToLower() == "mochi" || t.ToLower() == "sago" || t.ToLower() == "oreos")
-                                        {
-                                            IceCreamList[Id].Toppings.Add(new Topping(t));
-                                            Console.WriteLine();
-                                        }
-                                        else if (t.ToLower() == "nil")
-                                        {
-                                            Console.WriteLine();
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            throw new Exception("Enter a valid topping.");
-                                        }
-
+                                        IceCreamList[Id].Toppings.Add(new Topping(t));
+                                        Console.WriteLine();
                                     }
-                                    catch (Exception ex)
+                                    else if (t.ToLower() == "nil")
                                     {
-                                        Console.WriteLine(ex.Message);
+                                        Console.WriteLine();
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Enter a valid topping!");
+                                        i--;
                                     }
                                 }
 
@@ -401,6 +398,14 @@ namespace S10257172B_PRG2Assignment
                                 {
                                     if (IceCreamList[Id].Toppings.Count() != 0)
                                     {
+                                        Console.WriteLine("Current Topping: ");
+                                        Console.WriteLine();
+                                        foreach(Topping t in IceCreamList[Id].Toppings)
+                                        {
+                                            Console.WriteLine(t.ToString());
+                                            Console.WriteLine();
+                                        }
+                                        
                                         Console.Write("Which topping do you want to delete? (1,2,3,.., 0 to exit) ");
                                         int toppingOption = Convert.ToInt32(Console.ReadLine());
                                         if (toppingOption > 0 && toppingOption <= IceCreamList[Id].Toppings.Count()) //Check if the toppingOption is in range in icecream topping list

@@ -786,9 +786,22 @@ class Program
                                 }
 
                                 customer.CurrentOrder.ModifyIceCream(icOption-1); //Modify the icecream by calling the class method
+                                foreach (Customer c in goldQueue)
+                                {
+                                    if (c.Memberid == customer.Memberid)
+                                    {
+                                        c.CurrentOrder = customer.CurrentOrder;
+                                    }
+                                }
+                                foreach (Customer c in regQueue)
+                                {
+                                    if (c.Memberid == customer.Memberid)
+                                    {
+                                        c.CurrentOrder = customer.CurrentOrder;
+                                    }
+                                }
 
-                                    
-                            }
+                                }
                                     
                             }
                             else if (option == 2) //Add new icecream
@@ -895,33 +908,25 @@ class Program
 
                                             }
 
-                                            while (true)
+                                            for (int i = 0; i < 4; i++)
                                             {
-                                                try
+                                                Console.Write("Enter the topping you wish to add on (Sprinkles, Mochi, Sago, Oreos) (enter nil to stop): ");
+                                                string? t = Console.ReadLine();
+                                                if (t.ToLower() == "sprinkles" || t.ToLower() == "mochi" || t.ToLower() == "sago" || t.ToLower() == "oreos") //Check if topping input is in the option
                                                 {
-
-                                                    Console.Write("Enter the topping you wish to add on (Sprinkles, Mochi, Sago, Oreos) (enter nil to stop): ");
-                                                    string? t = Console.ReadLine();
-
-                                                    if (t.ToLower() == "sprinkles" || t.ToLower() == "mochi" || t.ToLower() == "sago" || t.ToLower() == "oreos") //Check if topping input is in the option
-                                                    {
-                                                        toppingList.Add(new Topping(t)); //Add the topping to the toppingList
-
-                                                    }
-                                                    else if (t.ToLower() == "nil") //nil to exit
-                                                    {
-                                                        Console.WriteLine();
-                                                        break;
-                                                    }
-                                                    else //throw new exception is topping input is invalid
-                                                    {
-                                                        throw new Exception("Please enter a valid topping!");
-                                                    }
+                                                    toppingList.Add(new Topping(t)); //Add the topping to the toppingList
 
                                                 }
-                                                catch (Exception ex) // catch error
+                                                else if (t.ToLower() == "nil") //nil to exit
                                                 {
-                                                    Console.WriteLine(ex.Message);
+                                                    Console.WriteLine();
+                                                    break;
+                                                }
+                                                else //show error message if topping input is invalid
+                                                {
+                                                    Console.WriteLine("Please enter a valid topping!");
+                                                    i--;
+                                                    
                                                 }
                                             }
 
@@ -995,6 +1000,22 @@ class Program
                                         
 
                                         Console.WriteLine("Order successfully modified");
+
+                                        //Code below is to replace the customer current order in the queue
+                                        foreach(Customer c in goldQueue)
+                                        {
+                                            if(c.Memberid == customer.Memberid)
+                                            {
+                                                c.CurrentOrder = customer.CurrentOrder;
+                                            }
+                                        }
+                                        foreach(Customer c in regQueue)
+                                        {
+                                            if(c.Memberid == customer.Memberid)
+                                            {
+                                                c.CurrentOrder = customer.CurrentOrder;
+                                            }
+                                        }
                                         break;
 
                                     }
