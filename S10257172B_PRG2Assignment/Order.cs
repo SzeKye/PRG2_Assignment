@@ -164,7 +164,7 @@ namespace S10257172B_PRG2Assignment
                                 else
                                 {
                                     Console.WriteLine("Please input a valid flavour!");
-                                    i--;
+                                    i--; //Iterate the current loop again if input is invalid
                                     continue;
                                 }
 
@@ -194,7 +194,7 @@ namespace S10257172B_PRG2Assignment
                                 else
                                 {
                                     Console.WriteLine("Please input a valid flavour!");
-                                    i--;
+                                    i--; //Iterate the current loop again if input is invalid
                                     continue;
                                 }
 
@@ -223,7 +223,7 @@ namespace S10257172B_PRG2Assignment
                                 else
                                 {
                                     Console.WriteLine("Please input a valid flavour!");
-                                    i--;
+                                    i--; //Iterate the current loop again if input is invalid
                                     continue;
                                 }
 
