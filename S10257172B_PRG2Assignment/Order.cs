@@ -164,7 +164,7 @@ namespace S10257172B_PRG2Assignment
                                 else
                                 {
                                     Console.WriteLine("Please input a valid flavour!");
-                                    i--;
+                                    i--; //Iterate the current loop again if input is invalid
                                     continue;
                                 }
 
@@ -194,7 +194,7 @@ namespace S10257172B_PRG2Assignment
                                 else
                                 {
                                     Console.WriteLine("Please input a valid flavour!");
-                                    i--;
+                                    i--; //Iterate the current loop again if input is invalid
                                     continue;
                                 }
 
@@ -223,7 +223,7 @@ namespace S10257172B_PRG2Assignment
                                 else
                                 {
                                     Console.WriteLine("Please input a valid flavour!");
-                                    i--;
+                                    i--; //Iterate the current loop again if input is invalid
                                     continue;
                                 }
 
@@ -452,7 +452,7 @@ namespace S10257172B_PRG2Assignment
                         }
                     }
                 }
-                else if (modifyOption == 5) //Modify dipped for cone
+                else if (modifyOption == 5 && IceCreamList[Id].Option.ToLower() == "cone") //Modify dipped for cone
                 {
                     while (true)
                     {
@@ -488,7 +488,7 @@ namespace S10257172B_PRG2Assignment
                     }
 
                 }
-                else if (modifyOption == 6) //Modify waffle flavour for waffle
+                else if (modifyOption == 6 && IceCreamList[Id].Option.ToLower() == "waffle") //Modify waffle flavour for waffle
                 {
                     while (true)
                     {
@@ -520,6 +520,10 @@ namespace S10257172B_PRG2Assignment
                 {
                     Console.WriteLine(IceCreamList[Id].ToString());
                     break;
+                }
+                else
+                {
+                    Console.WriteLine("Please input a valid option");
                 }
                 Console.WriteLine("------------------------------------------");
                 foreach (IceCream ic in IceCreamList)

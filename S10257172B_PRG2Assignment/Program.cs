@@ -786,6 +786,7 @@ class Program
                                 }
 
                                 customer.CurrentOrder.ModifyIceCream(icOption-1); //Modify the icecream by calling the class method
+                                //Code below is to replace the customer current order in the queue
                                 foreach (Customer c in goldQueue)
                                 {
                                     if (c.Memberid == customer.Memberid)
@@ -894,7 +895,7 @@ class Program
                                                         else //throw new exception is flavour input is invalid
                                                         {
                                                             Console.WriteLine("Please enter a valid flavour!");
-                                                            i--;
+                                                            i--; // Use to iterate the current loop again if input is invalid
                                                             continue;
                                                         }
                                                     }
@@ -926,6 +927,7 @@ class Program
                                                 {
                                                     Console.WriteLine("Please enter a valid topping!");
                                                     i--;
+                                                    continue; // Use to iterate the current loop again if input is invalid
                                                     
                                                 }
                                             }
@@ -942,7 +944,7 @@ class Program
                                             customer.CurrentOrder.AddIceCream(new Cup(icOption, scoops, flavourList, toppingList)); //Add the icecream to the current order
 
                                         }
-                                        if (icOption.ToLower() == "cone") //Check if option is cone
+                                        else if (icOption.ToLower() == "cone") //Check if option is cone
                                         {
                                             while (true)
                                             {
@@ -965,7 +967,7 @@ class Program
                                                 }
                                             }
                                         }
-                                        if (icOption.ToLower() == "waffle") //Check if option is waffle
+                                        else if (icOption.ToLower() == "waffle") //Check if option is waffle
                                         {
                                             List<string> waffleFlavour = new List<string>() { "red velvet", "charcoal", "pandan", "original" }; //Store the waffle flavour in the list
                                             while (true)
@@ -999,23 +1001,39 @@ class Program
                                         }
                                         
 
-                                        Console.WriteLine("Order successfully modified");
+                                        Console.WriteLine("Order successfully created");
 
                                         //Code below is to replace the customer current order in the queue
-                                        foreach(Customer c in goldQueue)
+                                        bool custFound = false;
+                                        foreach (Customer c in goldQueue)
                                         {
-                                            if(c.Memberid == customer.Memberid)
+                                            if (c.Memberid == customer.Memberid)
                                             {
                                                 c.CurrentOrder = customer.CurrentOrder;
+                                                custFound = true;
                                             }
                                         }
-                                        foreach(Customer c in regQueue)
+                                        foreach (Customer c in goldQueue)
                                         {
-                                            if(c.Memberid == customer.Memberid)
+                                            if (c.Memberid == customer.Memberid)
                                             {
                                                 c.CurrentOrder = customer.CurrentOrder;
+                                                custFound = true;
                                             }
                                         }
+                                        if(custFound == false)
+                                        {
+                                            if (customer.Rewards.Tier.ToLower() == "gold")
+                                            {
+                                                goldQueue.Enqueue(customer);
+                                            }
+                                            else
+                                            {
+                                                regQueue.Enqueue(customer);
+                                            }
+                                        }
+
+
                                         break;
 
                                     }
@@ -1050,6 +1068,21 @@ class Program
                                             else
                                             {
                                                 customer.CurrentOrder.DeleteIceCream(icDelete -1); //Delete the icecream they selected
+                                                //Code below is to replace the customer current order in the queue
+                                                foreach(Customer c in goldQueue)
+                                                {
+                                                    if(c.Memberid == customer.Memberid)
+                                                    {
+                                                        c.CurrentOrder = customer.CurrentOrder;
+                                                    }
+                                                }
+                                                foreach(Customer c in regQueue)
+                                                {
+                                                    if(c.Memberid == customer.Memberid)
+                                                    {
+                                                        c.CurrentOrder = customer.CurrentOrder;
+                                                    }
+                                                }
                                             }
                                             break;
                                         }
