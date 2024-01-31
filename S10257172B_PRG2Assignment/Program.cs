@@ -1029,7 +1029,8 @@ class Program
                                                 custFound = true;
                                             }
                                         }
-                                        if(custFound == false)
+                                        
+                                        if(custFound == false) //This part is to enqueue the customer if it is not in the queue yet, check it their tier is gold or not
                                         {
                                             if (customer.Rewards.Tier.ToLower() == "gold")
                                             {
